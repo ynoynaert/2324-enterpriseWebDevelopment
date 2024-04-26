@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympics 2024</title>
+    <link rel="stylesheet" href="../static/css/form.css">
+</head>
+
+<body>
+  <header class="navbar">
+		<h1 class="titel">Paris 2024</h2>
+		<div class="user-info">
+			<span>Admin</span>
+			<span>iets@iets.com</span>
+			<button class="btn-header">Log out</button>
+		</div>
+	</header>
+
+  <div class="tab">
+    <h2>Add a competition</h2>
+    <form action="submit_competition.php" method="post">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br><br>
+
+        <label for="hour">Hour:</label>
+        <input type="time" id="hour" name="hour" required><br><br>
+
+        <label for="stadium">Stadium:</label>
+        <input type="text" id="stadium" name="stadium" required><br><br>
+
+        <label for="discipline">Discipline(s):</label>
+        <input type="text" id="discipline" name="discipline"><br><br>
+
+        <label for="olympic1">#1 Olympic:</label>
+        <input type="text" id="olympic1" name="olympic1" required><br><br>
+
+        <label for="olympic2">#2 Olympic:</label>
+        <input type="text" id="olympic2" name="olympic2" required><br><br>
+
+        <label for="price">Price per Ticket:</label>
+        <input type="number" id="price" name="price" required><br><br>
+
+        <label for="amount">Amount of Tickets:</label>
+        <input type="number" id="amount" name="amount" required><br><br>
+
+        <input class="btn" type="submit" value="Add competition">
+    </form>
+  </div>
+</body>
