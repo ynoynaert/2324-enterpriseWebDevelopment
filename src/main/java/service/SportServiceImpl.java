@@ -24,11 +24,11 @@ public class SportServiceImpl implements SportService {
         List<String> basketballComp = Arrays.asList("5/8/2024 18:00 Parijs");
         List<String> judoComp = Arrays.asList("5/8/2024 18:00 Parijs");
 
-        list.add(new Sport(1L, "Athletics", athleticsComp, athleticsDisciplines));
-        list.add(new Sport(2L, "Gymnastics", gymnasticsComp, gymnasticsDisciplines));
-        list.add(new Sport(3L, "Volleyball", volleyballComp, volleyballCompetitions));
-        list.add(new Sport(4L, "Basketball", basketballComp, null));
-        list.add(new Sport(5L, "Judo", judoComp, judoDisciplines));
+        list.add(new Sport(1L, "Athletics", athleticsDisciplines, athleticsComp));
+        list.add(new Sport(2L, "Gymnastics", gymnasticsDisciplines, gymnasticsComp));
+        list.add(new Sport(3L, "Volleyball", volleyballCompetitions, volleyballComp));
+        list.add(new Sport(4L, "Basketball", null, basketballComp));
+        list.add(new Sport(5L, "Judo", judoDisciplines, judoComp));
     }
 
     @Override
