@@ -2,59 +2,62 @@
 <html lang="en">
 
 <head>
-    <meta charset="ISO-8859-1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olympics 2024</title>
-    <link rel="stylesheet" href="../static/css/overview.css">
+	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Olympics 2024</title>
+	<link rel="stylesheet" href="../static/css/overview.css">
 </head>
 
 <body>
 	<header class="navbar">
 		<h1 class="titel">Paris 2024</h2>
-		<div class="user-info">
-			<span>Admin</span>
-			<span>iets@iets.com</span>
-			<button class="btn-header">Log out</button>
-		</div>
-	</header>	
+			<div class="user-info">
+				<span>Admin</span>
+				<span>iets@iets.com</span>
+				<button class="btn-header">Log out</button>
+			</div>
+	</header>
 
 	<div class="tab">
-	<h2>Volleyball</h2>
+		<h2>Volleyball</h2>
 		<table>
-			<tr>
+			<thead>
 				<th>Date</th>
 				<th>Hour</th>
 				<th>Stadium</th>
 				<th>Discipline</th>
 				<th>Tickets left</th>
 				<th>Price</th>
-				<th>Amount of tickets left</th>
-				<th>Buy tickets</th>
-			</tr>
-	
-					<th:block th:each="sport: ${sportList}">
+				<th>Amount of tickets</th>
+				<th></th>
+			</thead>
+
+			<th:block th:each="sport: ${sportList}">
 				<tr>
-	
-									<!-- TODO -->
+
+					<!-- TODO -->
 					<td><a th:href="|/sports/${sport.id}|" th:text="${sport.name}"></a></td>
 					<td>Parijs</td>
 					<td th:text="${sport.disciplines}"></td>
-					<td th:text="${sport.competitions}"></td>	
+					<td th:text="${sport.competitions}"></td>
 					<td></td>
 					<td></td>
 					<td></td>
-					<td></td>
-									
-					
+					<td>BUY</td>
+
+
 					<!-- oplossing zonder DateFormatter -->
-									<!-- <td th:with="df=#{date.format.pattern}" th:text="${#temporals.format(contact.birthDate, df)}"></td>  -->
-									
+					<!-- <td th:with="df=#{date.format.pattern}" th:text="${#temporals.format(contact.birthDate, df)}"></td>  -->
+
 				</tr>
 			</th:block>
-	
+
 		</table>
+	</div>
+	<div width="70%" border-collapse="collapse" margin="20px auto">
 		<button class="btn">Add competition</button>
 	</div>
-	
+
 </body>
+
 </html>

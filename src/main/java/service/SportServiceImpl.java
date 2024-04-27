@@ -17,13 +17,13 @@ public class SportServiceImpl implements SportService {
         List<String> gymnasticsDisciplines = Arrays.asList("Artistic Gymnastics", "Rhythmic Gymnastics", "Trampoline");
         List<String> volleyballCompetitions = Arrays.asList("Indoor", "Beach", "National League");
         List<String> judoDisciplines = Arrays.asList("Throwing", "Grappling", "Ground Fighting");
-        
+
         List<String> athleticsComp = Arrays.asList("5/8/2024 18:00 Parijs");
         List<String> gymnasticsComp = Arrays.asList("5/8/2024 18:00 Parijs");
         List<String> volleyballComp = Arrays.asList("5/8/2024 18:00 Parijs");
         List<String> basketballComp = Arrays.asList("5/8/2024 18:00 Parijs");
         List<String> judoComp = Arrays.asList("5/8/2024 18:00 Parijs");
-
+        
         list.add(new Sport(1L, "Athletics", athleticsDisciplines, athleticsComp));
         list.add(new Sport(2L, "Gymnastics", gymnasticsDisciplines, gymnasticsComp));
         list.add(new Sport(3L, "Volleyball", volleyballCompetitions, volleyballComp));
