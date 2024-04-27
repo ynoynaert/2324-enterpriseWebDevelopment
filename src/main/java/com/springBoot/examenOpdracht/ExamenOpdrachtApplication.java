@@ -4,10 +4,13 @@ import java.util.Locale;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
@@ -16,7 +19,13 @@ import service.SportService;
 import service.SportServiceImpl;
 
 @SpringBootApplication
-@EnableWebMvc
+@EnableJpaRepositories(basePackages = {"repository"})
+@EntityScan(basePackages = {"domain"})
+@ComponentScans({
+	@ComponentScan("service"),
+	@ComponentScan("domain"),
+	@ComponentScan("repository")
+})
 public class ExamenOpdrachtApplication implements WebMvcConfigurer {
 
     public static void main(String[] args) {
@@ -25,28 +34,28 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addRedirectViewController("/", "/sports/list");
+        registry.addRedirectViewController("/", "/sports");
     }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(dateFormatter());
     }
-
+    
     @Bean
-    public SportService sportService() {
-        return new SportServiceImpl();
+    SportService sportService() {
+    	return new SportServiceImpl();
     }
 
     @Bean
-    public LocaleResolver myLocaleResolver() {
+    LocaleResolver myLocaleResolver() {
         SessionLocaleResolver slr = new SessionLocaleResolver();
         slr.setDefaultLocale(Locale.ENGLISH);
         return slr;
     }
 
     @Bean
-    public DateFormatter dateFormatter() {
+    DateFormatter dateFormatter() {
         return new DateFormatter();
     }
 }

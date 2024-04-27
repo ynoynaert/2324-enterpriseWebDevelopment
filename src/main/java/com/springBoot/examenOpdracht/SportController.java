@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import repository.CompetitionRepository;
+import repository.SportRepository;
 import service.SportService;
 
 @Controller
@@ -16,11 +18,16 @@ public class SportController {
 	private MessageSource messageSource;
 
 	@Autowired
-	private SportService sportService;
+	private SportRepository sportRepository;
 	
-	@GetMapping(value = "/list")
-	public String listContacts(Model model) {
-		model.addAttribute("sportList", sportService.findAll());
-		return "list";
+	@Autowired
+	private CompetitionRepository competitionRepository;
+	
+	@Autowired
+	private SportService sportService;
+
+	public String listSport(Model model) {
+		model.addAttribute("sportList", sportRepository.findAll());
+		return "overview";
 	}
 }

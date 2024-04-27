@@ -1,9 +1,11 @@
 package repository;
 
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 import domain.Competition;
 
-import org.springframework.data.repository.CrudRepository;
-
+@Repository
 public interface CompetitionRepository extends CrudRepository<Competition, Long>{
 
 }

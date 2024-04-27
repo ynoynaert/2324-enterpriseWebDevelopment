@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="ISO-8859-1">
@@ -24,21 +24,10 @@
             <h2>Olympic Sports</h2>            
             <tbody>
                 <tr>
-                    <td>Voetbal</td>
-                    <td><button class="btn" href="voetbal_details.html">Details</button></td>
+                    <td th:text="${sport.name}"></td>
+                    <td><button class="btn" href="">Details</button></td>
                     <td><button class="btn">Tickets</button></td>
                 </tr>
-                <tr>
-                    <td>Tennis</td>
-                    <td><button class="btn" href="tennis_details.html">Details</button></td>
-                    <td><button class="btn">Tickets</button></td>
-                </tr>
-                <tr>
-                    <td>Basketbal</td>
-                    <td><button class="btn" href="basketbal_details.html">Details</button></td>
-                    <td><button class="btn">Tickets</button></td>
-                </tr>
-                <!-- Voeg hier meer rijen toe voor andere sporten -->
             </tbody>
         </table>
     </div>
