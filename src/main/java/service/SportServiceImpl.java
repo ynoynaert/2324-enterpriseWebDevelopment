@@ -6,7 +6,6 @@ import repository.SportRepository;
 
 public class SportServiceImpl implements SportService {
 	
-	@Autowired
     private SportRepository sportRepository;	
 
 }

@@ -19,13 +19,8 @@ import service.SportService;
 import service.SportServiceImpl;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = {"repository"})
-@EntityScan(basePackages = {"domain"})
-@ComponentScans({
-	@ComponentScan("service"),
-	@ComponentScan("domain"),
-	@ComponentScan("repository")
-})
+@EnableJpaRepositories("repository")
+@EntityScan("domain")
 public class ExamenOpdrachtApplication implements WebMvcConfigurer {
 
     public static void main(String[] args) {
@@ -34,7 +29,7 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addRedirectViewController("/", "/sports");
+        registry.addRedirectViewController("/", "/sports/list");
     }
 
     @Override

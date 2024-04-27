@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import repository.CompetitionRepository;
 import repository.SportRepository;
 import service.SportService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/sports")
@@ -26,6 +28,7 @@ public class SportController {
 	@Autowired
 	private SportService sportService;
 
+	@GetMapping(value = "list")
 	public String listSport(Model model) {
 		model.addAttribute("sportList", sportRepository.findAll());
 		return "overview";
