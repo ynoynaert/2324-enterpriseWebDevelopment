@@ -47,12 +47,11 @@ public class SportController {
 			return "redirect:/sports/list";
 		else {
 			s = sport.get();
-			comp = sportRepository.findAllCompetitions();
+			comp = sportRepository.findAllCompetitions(s.getId());
 		}
 			
 		model.addAttribute("sport", s);
 		model.addAttribute("competitions", comp);
-		System.out.println(comp);
 		return "detailSport";
 	}
 	

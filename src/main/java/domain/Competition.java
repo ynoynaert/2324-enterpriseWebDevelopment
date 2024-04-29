@@ -31,8 +31,8 @@ public class Competition implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne @JoinTable @Setter @Getter
-	Sport sport;
+	@ManyToOne @Setter @Getter
+	private Sport sport;
 	
 	@NotNull @Getter @Setter
 	//TODO: De  datum  moet  liggen  tussen  26  juli 2024 en 11 augustus 2024.
