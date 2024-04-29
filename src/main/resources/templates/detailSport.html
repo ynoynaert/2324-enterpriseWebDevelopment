@@ -20,23 +20,22 @@
 	</header>
 
 	<div class="tab">
-		<button class="btn">Add competition</button>
 		<h2 th:text="${sport.name}"></h2>
 		<table>
 			<thead>
 				<th>Date</th>
 				<th>Time</th>
 				<th>Stadium</th>
-				<th>Discipline</th>
-				<th>Discipline</th>
+				<th>Discipline #1</th>
+				<th>Discipline #2</th>
 				<th>Tickets left</th>
 				<th>Price</th>
-				<th>Amount of tickets</th>
+				<th># Tickets</th>
 				<th></th>
 			</thead>
 
 			<th:block th:each="c: ${competitions}">
-				<tr>
+				<tr class="row">
 					<td th:text="${c.date}"></td>
 					<td th:text="${c.time}"></td>
 					<td th:text="${c.stadium}"></td>
@@ -45,6 +44,7 @@
 					<td th:text="${c.ticketLeft}"></td>
 					<td th:text="${c.pricePerTicket}"></td>
 					<td th:text=${c.totalTickets}></td>
+					 <!--TODO: href tickets  -->
 					<td>BUY</td>
 
 					<!-- oplossing zonder DateFormatter -->
@@ -54,6 +54,8 @@
 			</th:block>
 
 		</table>
+		 <!--TODO: href competition  -->
+		<a th:href="|/sports/addCompetition/${sport.id}|"class="btn">Add competition</a>
 	</div>
 </body>
 

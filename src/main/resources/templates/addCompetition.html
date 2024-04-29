@@ -9,6 +9,7 @@
 </head>
 
 <body>
+	<!-- TODO: na inloggen navbar aanpassen -->
   <header class="navbar">
 		<h1 class="titel">Paris 2024</h1>
 		<div class="user-info">
@@ -20,32 +21,35 @@
 
   <div class="tab">
     <h2>Add a competition</h2>
-    <form action="submit_competition.php" method="post">
+    <form method="post">
         <label for="date">Date:</label>
-        <input type="date" id="date" name="date" required><br><br>
+        <input type="date" id="datepicker"><br><br>
 
-        <label for="hour">Hour:</label>
-        <input type="time" id="hour" name="hour" required><br><br>
+        <label for="hour">Time:</label>
+        <input type="time" id="time"><br><br>
 
         <label for="stadium">Stadium:</label>
-        <input type="text" id="stadium" name="stadium" required><br><br>
+        <input type="text" id="stadium"><br><br>
 
-        <label for="discipline">Discipline(s):</label>
-        <input type="text" id="discipline" name="discipline"><br><br>
+        <label for="discipline">Discipline #1:</label>
+        <input type="text" id="discipline1"><br><br>
+        
+        <label for="discipline">Discipline #2:</label>
+        <input type="text" id="discipline2"><br><br>
 
-        <label for="olympic1">#1 Olympic:</label>
-        <input type="text" id="olympic1" name="olympic1" required><br><br>
+        <label for="olympic1">Olympic #1:</label>
+        <input type="text" id="olympic1"><br><br>
 
-        <label for="olympic2">#2 Olympic:</label>
-        <input type="text" id="olympic2" name="olympic2" required><br><br>
+        <label for="olympic2">Olympic #2:</label>
+        <input type="text" id="olympic2"><br><br>
 
         <label for="price">Price per Ticket:</label>
-        <input type="number" id="price" name="price" required><br><br>
+        <input type="number" id="price"><br><br>
 
         <label for="amount">Amount of Tickets:</label>
-        <input type="number" id="amount" name="amount" required><br><br>
+        <input type="number" id="amount"><br><br>
 
-        <input class="btn" type="submit" value="Add competition">
+        <button class="btn" type="submit">Add competition</button>
     </form>
   </div>
 </body>
