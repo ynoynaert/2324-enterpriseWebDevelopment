@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -28,6 +30,9 @@ public class Competition implements Serializable {
 	@Id @Getter
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@ManyToOne @JoinTable @Setter @Getter
+	Sport sport;
 	
 	@NotNull @Getter @Setter
 	//TODO: De  datum  moet  liggen  tussen  26  juli 2024 en 11 augustus 2024.

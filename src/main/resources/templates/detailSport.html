@@ -5,10 +5,11 @@
 	<meta charset="ISO-8859-1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Olympics 2024</title>
-	<link rel="stylesheet" href="@{/css/overview.css}">
+	<link rel="stylesheet" th:href="@{/css/overview.css}">
 </head>
 
 <body>
+	<!-- TODO: na inloggen navbar aanpassen -->
 	<header class="navbar">
 		<h1 class="titel">Paris 2024</h1>
 			<div class="user-info">
@@ -19,11 +20,12 @@
 	</header>
 
 	<div class="tab">
-		<h2>Volleyball</h2>
+		<button class="btn">Add competition</button>
+		<h2 th:text="${sport.name}"></h2>
 		<table>
 			<thead>
 				<th>Date</th>
-				<th>Hour</th>
+				<th>Time</th>
 				<th>Stadium</th>
 				<th>Discipline</th>
 				<th>Tickets left</th>
@@ -32,19 +34,16 @@
 				<th></th>
 			</thead>
 
-			<th:block th:each="sport: ${sportList}">
+			<th:block th:each="c: ${competitions}">
 				<tr>
-
-					<!-- TODO -->
-					<td><a th:href="|/sports/${sport.id}|" th:text="${sport.name}"></a></td>
-					<td>Parijs</td>
-					<td th:text="${sport.disciplines}"></td>
-					<td th:text="${sport.competitions}"></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td th:text="${c.date}"></td>
+					<td th:text="${c.time}"></td>
+					<td th:text="${c.stadium}"></td>
+					<td th:text="${c.discipline1}"></td>
+					<td th:text="${c.ticketLeft}"></td>
+					<td th:text="${c.pricePerTicket}"></td>
+					<td th:text=${c.totalTickets}></td>
 					<td>BUY</td>
-
 
 					<!-- oplossing zonder DateFormatter -->
 					<!-- <td th:with="df=#{date.format.pattern}" th:text="${#temporals.format(contact.birthDate, df)}"></td>  -->
@@ -54,10 +53,6 @@
 
 		</table>
 	</div>
-	<div width="70%" border-collapse="collapse" margin="20px auto">
-		<button class="btn">Add competition</button>
-	</div>
-
 </body>
 
 </html>

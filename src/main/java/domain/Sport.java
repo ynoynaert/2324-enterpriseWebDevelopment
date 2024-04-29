@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
@@ -17,6 +19,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity @NoArgsConstructor(access = AccessLevel.PROTECTED)@EqualsAndHashCode(exclude = "id")
+@NamedQueries({ 
+	@NamedQuery(name = "Sport.findAllCompetitions", 
+	query = "SELECT competitions FROM Sport s") })
+
 public class Sport implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,7 +35,7 @@ public class Sport implements Serializable {
 	private String name;
 
 	@Getter
-	@OneToMany
+	@OneToMany(mappedBy="sport")
     private List<Competition> competitions = new ArrayList<>();
 	
 	public Sport(String name) {

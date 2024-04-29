@@ -53,31 +53,57 @@ public class InitDataConfig implements CommandLineRunner {
     	Competition c15 = new Competition(LocalDate.of(2024, 5, 25), "16:00", "Judo Hall", "13570", "92357", "Individual Kata", null, 40, 38.0, 4);
     	Competition c20 = new Competition(LocalDate.of(2024, 5, 26), "14:45", "Judo Arena", "12468", "13468", null, null, 35, 42.0, 1);
 
+    	c1.setSport(athletics);
+    	c6.setSport(athletics);
+    	c11.setSport(athletics);
+    	c16.setSport(athletics);
     	athletics.addCompetition(c1);
     	athletics.addCompetition(c6);
     	athletics.addCompetition(c11);
     	athletics.addCompetition(c16);
     	
+    	c2.setSport(gymnastics);
+    	c7.setSport(gymnastics);
+    	c12.setSport(gymnastics);
+    	c17.setSport(gymnastics);
     	gymnastics.addCompetition(c2);
     	gymnastics.addCompetition(c7);
     	gymnastics.addCompetition(c12);
     	gymnastics.addCompetition(c17);
-    	
+
+    	c3.setSport(volleyball);
+    	c8.setSport(volleyball);
+    	c13.setSport(volleyball);
+    	c18.setSport(volleyball);
     	volleyball.addCompetition(c3);
     	volleyball.addCompetition(c8);
     	volleyball.addCompetition(c13);
     	volleyball.addCompetition(c18);
     	
+    	c4.setSport(basketball);
+    	c9.setSport(basketball);
+    	c14.setSport(basketball);
+    	c19.setSport(basketball);
     	basketball.addCompetition(c4);
     	basketball.addCompetition(c9);
     	basketball.addCompetition(c14);
     	basketball.addCompetition(c19);
     	
+    	c5.setSport(judo);
+    	c10.setSport(judo);
+    	c15.setSport(judo);
+    	c20.setSport(judo);
     	judo.addCompetition(c5);
     	judo.addCompetition(c10);
     	judo.addCompetition(c15);
     	judo.addCompetition(c20);
     	
+    	sportRepository.save(athletics);
+    	sportRepository.save(gymnastics);
+    	sportRepository.save(volleyball);
+    	sportRepository.save(basketball);
+    	sportRepository.save(judo);
+   
     	competitionRepository.save(c1);
     	competitionRepository.save(c2);
     	competitionRepository.save(c3);
@@ -98,12 +124,6 @@ public class InitDataConfig implements CommandLineRunner {
     	competitionRepository.save(c18);
     	competitionRepository.save(c19);
     	competitionRepository.save(c20);
-    	
-    	sportRepository.save(athletics);
-    	sportRepository.save(gymnastics);
-    	sportRepository.save(volleyball);
-    	sportRepository.save(basketball);
-    	sportRepository.save(judo);
     }
 
 }

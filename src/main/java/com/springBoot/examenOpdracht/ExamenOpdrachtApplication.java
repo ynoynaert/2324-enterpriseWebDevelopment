@@ -29,7 +29,7 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addRedirectViewController("/", "/sports/list");
+        registry.addRedirectViewController("/", "/sports");
     }
 
     @Override

@@ -10,6 +10,7 @@
 
 <body>
 
+	<!-- TODO: na inloggen navbar aanpassen -->
     <header class="navbar">
         <h1 class="titel">Paris 2024</h1>
         <div class="user-info">
@@ -25,8 +26,8 @@
             <th:block th:each="sport: ${sportList}">
                 <tr>
                     <td th:text="${sport.name}"></td>
-                    <td><button class="btn" href="">Details</button></td>
-                    <td><button class="btn">Tickets</button></td>
+                    <td><a class="btn" th:href="|/sports/${sport.id}|">Details</a></td>
+                    <td><button class="btn">Tickets</button></td> <!--TODO: href tickets  -->
                 </tr>
             </th:block>
         </table>
