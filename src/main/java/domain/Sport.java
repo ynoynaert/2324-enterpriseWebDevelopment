@@ -20,8 +20,9 @@ import lombok.Setter;
 
 @Entity @NoArgsConstructor(access = AccessLevel.PROTECTED)@EqualsAndHashCode(exclude = "id")
 @NamedQueries({ 
-	@NamedQuery(name = "Sport.findAllCompetitions", 
-	query = "SELECT competitions FROM Sport s WHERE :sportId = id") })
+	@NamedQuery(name = "Sport.findAllCompetitions", query = "SELECT competitions FROM Sport s WHERE :sportId = id"),
+	@NamedQuery(name = "Sport.findAllStadiums", query = "SELECT stadiums FROM Sport s WHERE :sportId = id")
+})
 
 public class Sport implements Serializable {
 
@@ -38,11 +39,19 @@ public class Sport implements Serializable {
 	@OneToMany(mappedBy="sport")
     private List<Competition> competitions = new ArrayList<>();
 	
+	@Getter
+	@OneToMany(mappedBy="sport")
+	private List<Stadium> stadiums = new ArrayList<>();
+	
 	public Sport(String name) {
 		setName(name);
 	}
 	
 	public void addCompetition(Competition comp) {
 		competitions.add(comp);
+	}
+	
+	public void addStadium(Stadium stad) {
+		stadiums.add(stad);
 	}
 }

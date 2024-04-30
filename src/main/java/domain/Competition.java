@@ -34,6 +34,9 @@ public class Competition implements Serializable {
 	@ManyToOne @Setter @Getter
 	private Sport sport;
 	
+	@ManyToOne @Setter @Getter
+	private Stadium stadium;
+	
 	@NotNull @Getter @Setter
 	//TODO: De  datum  moet  liggen  tussen  26  juli 2024 en 11 augustus 2024.
 	private LocalDate date;
@@ -41,9 +44,6 @@ public class Competition implements Serializable {
 	@NotBlank @Getter @Setter
 	@Pattern(regexp = "^([8-9]|1[0-9]|2[0-3]):[0-5][0-9]$", message = "Invalid hour format. Use HH:mm")
 	private String time;
-	
-	@NotBlank(message = "Stadium name is required") @Getter @Setter
-	private String stadium;
 	
     @NotBlank(message = "Olympic number 1 is required") @Getter @Setter
     @Pattern(regexp = "^(?!0)(?!.*(.)\\1)[0-9]{5}$", message = "Invalid Olympic number format")
@@ -71,7 +71,7 @@ public class Competition implements Serializable {
     @Range(min = 1, max = 49, message = "Ticket left must be between 1 and 49")
     private int ticketLeft;
     
-    public Competition (LocalDate date, String time, String stadium, String olympicNumber1, String olympicNumber2, 
+    public Competition (LocalDate date, String time, Stadium stadium, String olympicNumber1, String olympicNumber2, 
     		String discipline1, String discipline2, int totalTickets, double pricePerTicket, int ticketLeft) {
     	setDate(date);
     	setDiscipline1(discipline1);
