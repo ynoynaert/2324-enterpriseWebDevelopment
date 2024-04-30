@@ -84,6 +84,10 @@ public class InitDataConfig implements CommandLineRunner {
     	c6.setStadium(s6);
     	c11.setStadium(s11);
     	c16.setStadium(s16);
+    	s1.setSport(athletics);
+    	s6.setSport(athletics);
+    	s11.setSport(athletics);
+    	s16.setSport(athletics);
     	athletics.addCompetition(c1);
     	athletics.addCompetition(c6);
     	athletics.addCompetition(c11);
@@ -101,6 +105,10 @@ public class InitDataConfig implements CommandLineRunner {
     	c7.setStadium(s7);
     	c12.setStadium(s12);
     	c17.setStadium(s17);
+    	s2.setSport(gymnastics);
+    	s7.setSport(gymnastics);
+    	s12.setSport(gymnastics);
+    	s17.setSport(gymnastics);
     	gymnastics.addCompetition(c2);
     	gymnastics.addCompetition(c7);
     	gymnastics.addCompetition(c12);
@@ -118,6 +126,10 @@ public class InitDataConfig implements CommandLineRunner {
     	c8.setStadium(s8);
     	c13.setStadium(s13);
     	c18.setStadium(s18);
+    	s3.setSport(volleyball);
+    	s8.setSport(volleyball);
+    	s13.setSport(volleyball);
+    	s18.setSport(volleyball);
     	volleyball.addCompetition(c3);
     	volleyball.addCompetition(c8);
     	volleyball.addCompetition(c13);
@@ -135,6 +147,10 @@ public class InitDataConfig implements CommandLineRunner {
     	c9.setStadium(s9);
     	c14.setStadium(s14);
     	c19.setStadium(s19);
+    	s4.setSport(basketball);
+    	s9.setSport(basketball);
+    	s14.setSport(basketball);
+    	s19.setSport(basketball);
     	basketball.addCompetition(c4);
     	basketball.addCompetition(c9);
     	basketball.addCompetition(c14);
@@ -151,6 +167,9 @@ public class InitDataConfig implements CommandLineRunner {
     	c5.setStadium(s5);
     	c10.setStadium(s10);
     	c15.setStadium(s15);
+    	s5.setSport(judo);
+    	s10.setSport(judo);
+    	s15.setSport(judo);
     	judo.addCompetition(c5);
     	judo.addCompetition(c10);
     	judo.addCompetition(c15);

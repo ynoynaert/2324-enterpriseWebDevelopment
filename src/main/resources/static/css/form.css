@@ -92,7 +92,7 @@ form {
   margin-top: 10px;
 }
 
-input {
+input, select {
   float: right;
   clear: both;
   width: 150px;

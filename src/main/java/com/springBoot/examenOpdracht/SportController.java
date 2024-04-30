@@ -58,13 +58,11 @@ public class SportController {
 		else {
 			s = sport.get();
 			comp = sportRepository.findAllCompetitions(s.getId());
-			stad = sportRepository.findAllStadiums(s.getId());
 			comp.sort(Comparator.comparing(Competition::getDate).thenComparing(Competition::getTime));
 		}
 			
 		model.addAttribute("sport", s);
 		model.addAttribute("competitions", comp);
-		model.addAttribute("stadiums", stad);
 		return "detailSport";
 	}
 	
@@ -73,6 +71,9 @@ public class SportController {
 		Optional<Sport> sport = sportRepository.findById(sportId);
 		if (!sport.isPresent())
 			return "redirect:/sports/{id}";
+		List<Stadium> stad = sportRepository.findAllStadiums(sport.get().getId());
+		System.out.println(stad);
+		model.addAttribute("stadiums", stad);
 		return "addCompetition";
 	}
 	

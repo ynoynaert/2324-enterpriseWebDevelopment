@@ -29,7 +29,9 @@
         <input type="time" id="time"><br><br>
 
         <label for="stadium">Stadium:</label>
-        <input type="text" id="stadium"><br><br>
+        <select id="stadium">
+    		<option th:each="stadium : ${stadiums}" th:value="${stadium}" th:text="${stadium.name}"></option>
+		</select><br><br>
 
         <label for="discipline">Discipline #1:</label>
         <input type="text" id="discipline1"><br><br>
