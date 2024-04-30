@@ -72,7 +72,6 @@ public class SportController {
 		if (!sport.isPresent())
 			return "redirect:/sports/{id}";
 		List<Stadium> stad = sportRepository.findAllStadiums(sport.get().getId());
-		System.out.println(stad);
 		model.addAttribute("stadiums", stad);
 		return "addCompetition";
 	}
