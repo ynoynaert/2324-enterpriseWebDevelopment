@@ -8,13 +8,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity @Getter @Setter @NoArgsConstructor (access = AccessLevel.PROTECTED) @AllArgsConstructor @EqualsAndHashCode(of = "email")
+@Entity @Getter @Setter @NoArgsConstructor (access = AccessLevel.PROTECTED) @EqualsAndHashCode(of = "email")
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -23,8 +22,22 @@ public class Account implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Email
-	private String email;	
+//	@OneToMany(mappedBy = "owner")
+//    @Getter
+//	private List<Ticket> tickets = new ArrayList<>();
 	
+	@Email @Setter @Getter
+	private String email;
+	
+	@Setter @Getter
 	private String password;
+	
+//	public void addTicket(Ticket ticket) {
+//		tickets.add(ticket);
+//	}
+	
+	public Account(String email, String password) {
+		setEmail(email);
+		setPassword(password);
+	}
 }

@@ -21,25 +21,24 @@ import domain.Stadium;
 import repository.CompetitionRepository;
 import repository.SportRepository;
 import repository.StadiumRepository;
-import service.SportService;
+import repository.TicketRepository;
+import service.OlympicService;
 
 @Controller
 @RequestMapping("/sports")
-public class SportController {
+public class OlympicController {
 	@Autowired
 	private MessageSource messageSource;
-
 	@Autowired
-	private SportRepository sportRepository;
-	
+	private SportRepository sportRepository;	
 	@Autowired
-	private CompetitionRepository competitionRepository;
-	
+	private CompetitionRepository competitionRepository;	
 	@Autowired
 	private StadiumRepository stadiumRepository;
-	
 	@Autowired
-	private SportService sportService;
+	private TicketRepository ticektRepository;	
+	@Autowired
+	private OlympicService olympicService;
 
 	@GetMapping
 	public String listSport(Model model) {
@@ -50,17 +49,12 @@ public class SportController {
 	@GetMapping(value = "/{id}")
 	public String show(@PathVariable("id") long id, Model model) {
 		Optional<Sport> sport = sportRepository.findById(id);
-		Sport s;
-		List<Competition> comp;
-		List<Stadium> stad;
 		if (!sport.isPresent())
 			return "redirect:/sports/list";
-		else {
-			s = sport.get();
-			comp = sportRepository.findAllCompetitions(s.getId());
-			comp.sort(Comparator.comparing(Competition::getDate).thenComparing(Competition::getTime));
-		}
-			
+		
+		Sport s = sport.get();
+		List<Competition> comp = sportRepository.findAllCompetitions(s.getId());
+		comp.sort(Comparator.comparing(Competition::getDate).thenComparing(Competition::getTime));
 		model.addAttribute("sport", s);
 		model.addAttribute("competitions", comp);
 		return "detailSport";
@@ -87,6 +81,7 @@ public class SportController {
 		
 		s.addCompetition(comp);
 		competitionRepository.save(comp);
+		olympicService.makeTickets(sportId, comp.getId(), comp.getPrice(), comp.getTotalTickets());
 		
 		return "redirect:/sports/{id}";
 	}

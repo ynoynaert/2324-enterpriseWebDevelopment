@@ -2,6 +2,8 @@ package domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -10,13 +12,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -58,30 +59,41 @@ public class Competition implements Serializable {
     
     @Nullable @Getter @Setter
 	private String discipline2;
-	
-    @NotNull(message = "Ticket quantity is required") @Getter @Setter
+    
+    @NotNull(message = "Total tickets is required") @Getter @Setter
     @Range(min = 1, max = 50, message = "Total tickets must be between 1 and 50")
     private int totalTickets;
     
-    @NotNull(message = "Ticket price is required") @Getter @Setter
-    @Range(min = 0, max = 149, message = "Price per ticket must be between 0 and 149")
-    private double pricePerTicket;
+    @Getter @Setter
+    private double price;
     
     @NotNull(message = "Remaining tickets is required") @Getter @Setter
     @Range(min = 1, max = 49, message = "Ticket left must be between 1 and 49")
     private int ticketLeft;
+
+    @OneToMany(mappedBy = "competition")
+    private List<Ticket> tickets = new ArrayList<>();
+
     
     public Competition (LocalDate date, String time, Stadium stadium, String olympicNumber1, String olympicNumber2, 
-    		String discipline1, String discipline2, int totalTickets, double pricePerTicket, int ticketLeft) {
+    		String discipline1, String discipline2, int totalTickets, double price, int ticketLeft) {
     	setDate(date);
     	setDiscipline1(discipline1);
     	setDiscipline2(discipline2);
     	setOlympicNumber1(olympicNumber1);
     	setOlympicNumber2(olympicNumber2);
-    	setPricePerTicket(pricePerTicket);
     	setStadium(stadium);
-    	setTicketLeft(ticketLeft);
     	setTime(time);
+    	setPrice(price);
     	setTotalTickets(totalTickets);
+    	setTicketLeft(ticketLeft);
+    	addTickets(price, totalTickets);
+    }
+    
+    private void addTickets(double price, int totalTickets) {
+    	for(int i = 0; i <= totalTickets; i++) {
+    		Ticket ticket = new Ticket(price);
+    		tickets.add(ticket);
+    	}
     }
 }

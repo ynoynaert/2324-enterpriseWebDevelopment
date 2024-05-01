@@ -6,8 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.LocaleResolver;
@@ -15,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import service.SportService;
-import service.SportServiceImpl;
+import service.OlympicService;
+import service.OlympicServiceImpl;
 
 @SpringBootApplication
 @EnableJpaRepositories("repository")
@@ -38,8 +36,8 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
     }
     
     @Bean
-    SportService sportService() {
-    	return new SportServiceImpl();
+    OlympicService sportService() {
+    	return new OlympicServiceImpl();
     }
 
     @Bean

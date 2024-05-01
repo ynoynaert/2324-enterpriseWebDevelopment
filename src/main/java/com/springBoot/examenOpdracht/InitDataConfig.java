@@ -12,6 +12,7 @@ import domain.Stadium;
 import repository.CompetitionRepository;
 import repository.SportRepository;
 import repository.StadiumRepository;
+import service.OlympicService;
 
 @Component
 public class InitDataConfig implements CommandLineRunner {
@@ -22,6 +23,8 @@ public class InitDataConfig implements CommandLineRunner {
 	private CompetitionRepository competitionRepository;
 	@Autowired
 	private StadiumRepository stadiumRepository;
+	@Autowired
+	private OlympicService olympicService;
 
     @Override
     public void run(String... args) {
@@ -224,7 +227,31 @@ public class InitDataConfig implements CommandLineRunner {
     	competitionRepository.save(c18);
     	competitionRepository.save(c19);
     	competitionRepository.save(c20);
-
+    	
+    	olympicService.makeTickets(athletics.getId(), c1.getId(), 25.0, 50);
+    	olympicService.makeTickets(athletics.getId(), c6.getId(), 22.5, 40);
+    	olympicService.makeTickets(athletics.getId(), c11.getId(), 20.0, 46);
+    	olympicService.makeTickets(athletics.getId(), c16.getId(), 23.0, 37);
+    	
+    	olympicService.makeTickets(gymnastics.getId(), c2.getId(), 30.0, 30);
+    	olympicService.makeTickets(gymnastics.getId(), c7.getId(), 35.0, 25);
+    	olympicService.makeTickets(gymnastics.getId(), c12.getId(), 32.55, 35);
+    	olympicService.makeTickets(gymnastics.getId(), c17.getId(), 27.5, 30);
+    	
+    	olympicService.makeTickets(volleyball.getId(), c3.getId(), 20.0, 28);
+    	olympicService.makeTickets(volleyball.getId(), c8.getId(), 18.0, 27);
+    	olympicService.makeTickets(volleyball.getId(), c13.getId(), 25.0, 19);
+    	olympicService.makeTickets(volleyball.getId(), c18.getId(), 22.0, 13); 
+    	
+    	olympicService.makeTickets(basketball.getId(), c4.getId(), 35.0, 46);
+    	olympicService.makeTickets(basketball.getId(), c9.getId(), 28.0, 45);
+    	olympicService.makeTickets(basketball.getId(), c14.getId(), 30.0, 40);
+    	olympicService.makeTickets(basketball.getId(), c19.getId(), 32.0, 50);
+    	
+    	olympicService.makeTickets(judo.getId(), c5.getId(), 40.0, 40);
+    	olympicService.makeTickets(judo.getId(), c10.getId(), 45.0, 35);
+    	olympicService.makeTickets(judo.getId(), c15.getId(), 38.0, 40);
+    	olympicService.makeTickets(judo.getId(), c20.getId(), 42.0, 35);
     }
 
 }
