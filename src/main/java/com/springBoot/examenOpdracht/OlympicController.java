@@ -23,6 +23,8 @@ import repository.SportRepository;
 import repository.StadiumRepository;
 import repository.TicketRepository;
 import service.OlympicService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/sports")
@@ -85,5 +87,19 @@ public class OlympicController {
 		
 		return "redirect:/sports/{id}";
 	}
+	
+	@GetMapping("/{id}/buyTickets/{compId}")
+	public String getMethodName(@PathVariable("id") long sportId, @PathVariable("compId") long compId, Model model) {
+		Optional<Sport> sport = sportRepository.findById(sportId);
+		Optional<Competition> competition = competitionRepository.findById(compId);
+		System.out.println("sportID: " + sportId);
+		System.out.println("compID: " + compId);
+		if (!sport.isPresent() && !competition.isPresent())
+			return "redirect:/sports/{id}";
+		model.addAttribute("sport", sport.get());
+	    model.addAttribute("competition", competition.get());
+		return "buyTickets";
+	}
+	
 	
 }

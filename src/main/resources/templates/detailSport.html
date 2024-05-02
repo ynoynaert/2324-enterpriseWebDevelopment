@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="ISO-8859-1">
@@ -45,7 +45,7 @@
 					<td th:text="${c.price}"></td>
 					<td th:text=${c.totalTickets}></td>
 					 <!--TODO: href tickets  -->
-					<td>BUY</td>
+					<td><a class="btn" th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a></td>
 
 					<!-- oplossing zonder DateFormatter -->
 					<!-- <td th:with="df=#{date.format.pattern}" th:text="${#temporals.format(contact.birthDate, df)}"></td>  -->

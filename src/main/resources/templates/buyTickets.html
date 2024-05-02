@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="ISO-8859-1">
@@ -9,6 +9,7 @@
 </head>
 
 <body>
+	<!-- TODO: na inloggen navbar aanpassen -->
   <header class="navbar">
 		<h1 class="titel">Paris 2024</h1>
 		<div class="user-info">
@@ -22,12 +23,11 @@
     <h2>Buy Tickets</h2>
     <form action="buy_tickets.php" method="post">
         <label for="amount">Amount of Tickets:</label>
-        <input type="number" id="amount" name="amount" required><br><br>
+        <input type="number" id="amount"><br><br>
 
         <label for="amount">Total:</label>
-        <input type="number" id="total" name="total"><br><br>
+        <input type="number" id="total"><br><br>
        
-
         <input class="btn" type="submit" value="Buy tickets">
     </form>
   </div>
