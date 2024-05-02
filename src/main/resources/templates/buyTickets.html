@@ -9,15 +9,7 @@
 </head>
 
 <body>
-	<!-- TODO: na inloggen navbar aanpassen -->
-  <header class="navbar">
-		<h1 class="titel">Paris 2024</h1>
-		<div class="user-info">
-			<span>Admin</span>
-			<span>iets@iets.com</span>
-			<button class="btn-header">Log out</button>
-		</div>
-	</header>
+	<div th:include="navbar :: copy"></div>
 
   <div class="tab">
     <h2>Buy Tickets</h2>
@@ -28,7 +20,7 @@
         <label for="amount">Total:</label>
         <input type="number" id="total"><br><br>
        
-        <input class="btn" type="submit" value="Buy tickets">
+       	<button class="btn" type="submit">Buy tickets</button>
     </form>
   </div>
 </body>

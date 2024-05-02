@@ -49,7 +49,7 @@ public class OlympicController {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public String show(@PathVariable("id") long id, Model model) {
+	public String showCompetitions(@PathVariable("id") long id, Model model) {
 		Optional<Sport> sport = sportRepository.findById(id);
 		if (!sport.isPresent())
 			return "redirect:/sports/list";
@@ -63,7 +63,7 @@ public class OlympicController {
 	}
 	
 	@GetMapping("/addCompetition/{id}")
-	public String showForm(@PathVariable("id") long sportId, Model model) {
+	public String showAddCompetitionToSport(@PathVariable("id") long sportId, Model model) {
 		Optional<Sport> sport = sportRepository.findById(sportId);
 		if (!sport.isPresent())
 			return "redirect:/sports/{id}";
@@ -89,7 +89,7 @@ public class OlympicController {
 	}
 	
 	@GetMapping("/{id}/buyTickets/{compId}")
-	public String buyTickets(@PathVariable("id") long sportId, @PathVariable("compId") long compId, Model model) {
+	public String showBuyTickets(@PathVariable("id") long sportId, @PathVariable("compId") long compId, Model model) {
 		Optional<Sport> sport = sportRepository.findById(sportId);
 		Optional<Competition> competition = competitionRepository.findById(compId);
 		if (!sport.isPresent() && !competition.isPresent())
@@ -100,9 +100,27 @@ public class OlympicController {
 	}
 	
 	//TODO: @PostMapping
+	@PostMapping("/{id}/buyTickets/{compId}")
+	public String buyTickets(@PathVariable("id") long sportId, Competition comp, BindingResult bindingResult, Model model, Locale locale) {
+		if (bindingResult.hasErrors()) {
+			// model.addAttribute("message", new Message("error", messageSource.getMessage("", null, locale)));  //TODO
+			return "buyTickets";
+		}
+		Optional<Sport> sport = sportRepository.findById(sportId);
+		Sport s = sport.get();
+		//TODO: logica hier nog uitwerken
+		
+		return "redirect:/sports/{id}";
+	}
 	
 	@GetMapping("/{id}/tickets")
-	public String showTickets(@PathVariable("id") long sportId) {
+	public String showTickets(@PathVariable("id") long sportId, Model model) {
+		Optional<Sport> sport = sportRepository.findById(sportId);
+		if (!sport.isPresent())
+			return "redirect:/sports";
+
+		model.addAttribute("sport", sport.get());
+		//TODO: verder uitwerken als account effectief bestaat
 		return "overviewTickets";
 	}
 	

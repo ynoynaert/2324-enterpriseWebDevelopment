@@ -9,15 +9,7 @@
 </head>
 
 <body>
-	<!-- TODO: na inloggen navbar aanpassen -->
-	<header class="navbar">
-		<h1 class="titel">Paris 2024</h1>
-			<div class="user-info">
-				<span>Admin</span>
-				<span>iets@iets.com</span>
-				<button class="btn-header">Log out</button>
-			</div>
-	</header>
+	<div th:include="navbar :: copy"></div>
 
 	<div class="tab">
 		<h2 th:text="${sport.name}"></h2>
