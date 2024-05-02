@@ -27,7 +27,7 @@
                 <tr>
                     <td th:text="${sport.name}"></td>
                     <td><a class="btn" th:href="|/sports/${sport.id}|">Details</a></td>
-                    <td><button class="btn">Tickets</button></td> <!--TODO: href tickets  -->
+                    <td><a class="btn" th:href="|/sports/${sport.id}/tickets|">Tickets</a></td> <!--TODO: href tickets  -->
                 </tr>
             </th:block>
         </table>

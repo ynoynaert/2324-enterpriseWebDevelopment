@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympics 2024</title>
+	<link rel="stylesheet" th:href="@{/css/overview.css}" />
+</head>
+
+<body>
+  <!-- TODO: na inloggen navbar aanpassen -->
+  <header class="navbar">
+    <h1 class="titel">Paris 2024</h1>
+    <div class="user-info">
+      <span>Admin</span>
+      <span>iets@iets.com</span>
+      <button class="btn-header">Log out</button>
+    </div>
+  </header>
+  <div class="tab">
+    <table>
+      <thead>
+        <tr>
+          <th>Competition</th>
+          <th>Sport</th>
+          <th>Day</th>
+          <th>Hour</th>
+          <th>No. of Tickets Bought</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Football Championship</td>
+          <td>Football</td>
+          <td>May 5th, 2024</td>
+          <td>15:00</td>
+          <td>2</td>
+          <td>$50.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+
+</html>
