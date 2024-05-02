@@ -19,11 +19,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity @NoArgsConstructor(access = AccessLevel.PROTECTED)@EqualsAndHashCode(exclude = "id")
-@NamedQueries({ 
-	@NamedQuery(name = "Sport.findAllCompetitions", query = "SELECT competitions FROM Sport s WHERE :sportId = id"),
-	@NamedQuery(name = "Sport.findAllStadiums", query = "SELECT stadiums FROM Sport s WHERE :sportId = id")
-})
-
 public class Sport implements Serializable {
 
 	private static final long serialVersionUID = 1L;

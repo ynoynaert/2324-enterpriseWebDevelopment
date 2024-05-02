@@ -55,8 +55,7 @@ public class OlympicController {
 			return "redirect:/sports/list";
 		
 		Sport s = sport.get();
-		List<Competition> comp = sportRepository.findAllCompetitions(s.getId());
-		comp.sort(Comparator.comparing(Competition::getDate).thenComparing(Competition::getTime));
+		List<Competition> comp = competitionRepository.findBySportOrderByDateAscTimeAsc(sport.get());
 		model.addAttribute("sport", s);
 		model.addAttribute("competitions", comp);
 		return "detailSport";
@@ -67,7 +66,8 @@ public class OlympicController {
 		Optional<Sport> sport = sportRepository.findById(sportId);
 		if (!sport.isPresent())
 			return "redirect:/sports/{id}";
-		List<Stadium> stad = sportRepository.findAllStadiums(sport.get().getId());
+		
+		List<Stadium> stad = stadiumRepository.findBySport(sport.get());
 		model.addAttribute("stadiums", stad);
 		return "addCompetition";
 	}

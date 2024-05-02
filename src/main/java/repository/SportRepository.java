@@ -13,6 +13,4 @@ import domain.Stadium;
 @Repository
 public interface SportRepository extends CrudRepository<Sport, Long>{
     Sport findByName(String name);
-    List<Competition> findAllCompetitions(@Param("sportId") Long id);
-    List<Stadium> findAllStadiums(@Param("sportId") Long id);
 }

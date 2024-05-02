@@ -70,7 +70,7 @@ public class Competition implements Serializable {
     private double price;
     
     @NotNull(message = "Remaining tickets is required") @Getter @Setter
-    @Range(min = 1, max = 49, message = "Ticket left must be between 1 and 49")
+    @Range(min = 0, max = 49, message = "Ticket left must be between 1 and 49")
     private int ticketLeft;
 
     @OneToMany(mappedBy = "competition")
