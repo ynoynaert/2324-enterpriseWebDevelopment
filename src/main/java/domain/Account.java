@@ -1,11 +1,14 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -22,9 +25,8 @@ public class Account implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-//	@OneToMany(mappedBy = "owner")
-//    @Getter
-//	private List<Ticket> tickets = new ArrayList<>();
+	@OneToMany(mappedBy = "owner") @Getter
+	private List<Ticket> tickets = new ArrayList<>();
 	
 	@Email @Setter @Getter
 	private String email;
@@ -32,9 +34,9 @@ public class Account implements Serializable {
 	@Setter @Getter
 	private String password;
 	
-//	public void addTicket(Ticket ticket) {
-//		tickets.add(ticket);
-//	}
+	public void addTicket(Ticket ticket) {
+		tickets.add(ticket);
+	}
 	
 	public Account(String email, String password) {
 		setEmail(email);

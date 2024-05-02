@@ -36,7 +36,7 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
     }
     
     @Bean
-    OlympicService sportService() {
+    OlympicService olympicService() {
     	return new OlympicServiceImpl();
     }
 

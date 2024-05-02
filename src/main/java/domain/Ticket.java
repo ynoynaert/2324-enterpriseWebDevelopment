@@ -24,8 +24,8 @@ public class Ticket implements Serializable {
     @ManyToOne @Setter @Getter
     private Competition competition;
     
-//    @ManyToOne @Setter @Getter
-//    private Account owner;
+    @ManyToOne @Setter @Getter
+    private Account owner;
 	
     @Id @Getter @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

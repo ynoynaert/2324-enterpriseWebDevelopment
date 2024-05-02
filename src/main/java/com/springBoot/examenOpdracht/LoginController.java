@@ -24,6 +24,6 @@ public class LoginController {
 		if (logout != null) {
 			model.addAttribute("msg", "Je bent succesvol uitgelogd.");
 		}
-		return "loginPage";
+		return "logIn";
 	}
 }
