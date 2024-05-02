@@ -77,7 +77,7 @@ public class InitDataConfig implements CommandLineRunner {
     	Competition c5 = new Competition(LocalDate.of(2024, 5, 25), "13:45", s5, "89135", "70135", "Lightweight & Heavyweight", null, 40, 40.0, 21);
     	Competition c10 = new Competition(LocalDate.of(2024, 5, 26), "12:15", s10, "90246", "81246", "Team Judo", null, 35, 45.0, 20);
     	Competition c15 = new Competition(LocalDate.of(2024, 5, 25), "16:00", s15, "13570", "92357", "Individual Kata", null, 40, 38.0, 4);
-    	Competition c20 = new Competition(LocalDate.of(2024, 5, 26), "14:45", s10, "12468", "13468", null, null, 35, 42.0, 1);
+    	Competition c20 = new Competition(LocalDate.of(2024, 5, 26), "14:45", s10, "12469", "13468", null, null, 35, 42.0, 1);
 
     	c1.setSport(athletics);
     	c6.setSport(athletics);

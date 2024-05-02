@@ -8,6 +8,7 @@ import java.util.List;
 import org.hibernate.validator.constraints.Range;
 
 import jakarta.annotation.Nullable;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,6 +47,7 @@ public class Competition implements Serializable {
 	@Pattern(regexp = "^([8-9]|1[0-9]|2[0-3]):[0-5][0-9]$", message = "Invalid hour format. Use HH:mm")
 	private String time;
 	
+	@Column(unique = true)
     @NotBlank(message = "Olympic number 1 is required") @Getter @Setter
     @Pattern(regexp = "^(?!0)(?!.*(.)\\1)[0-9]{5}$", message = "Invalid Olympic number format")
     private String olympicNumber1;
