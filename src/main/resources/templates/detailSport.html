@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="ISO-8859-1">
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Olympics 2024</title>
 	<link rel="stylesheet" th:href="@{/css/overview.css}">
@@ -22,7 +22,7 @@
 				<th>Discipline #2</th>
 				<th>Tickets left</th>
 				<th>Price</th>
-				<th># Tickets</th>
+				<th># Tickets bought</th>
 				<th></th>
 			</thead>
 
@@ -34,14 +34,10 @@
 					<td th:text="${c.discipline1}"></td>
 					<td th:text="${c.discipline2}"></td>
 					<td th:text="${c.ticketLeft}"></td>
-					<td th:text="${c.price}"></td>
+					<td th:text="|€ ${#numbers.formatDecimal(c.price, 2, 2)}|"></td>
+					<!-- TODO: aanpassen naar tickets bought voor een user -->
 					<td th:text=${c.totalTickets}></td>
-					 <!--TODO: href tickets  -->
 					<td><a class="btn" th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a></td>
-
-					<!-- oplossing zonder DateFormatter -->
-					<!-- <td th:with="df=#{date.format.pattern}" th:text="${#temporals.format(contact.birthDate, df)}"></td>  -->
-
 				</tr>
 			</th:block>
 

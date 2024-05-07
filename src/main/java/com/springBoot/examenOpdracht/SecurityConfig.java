@@ -32,6 +32,7 @@ public class SecurityConfig {
                     .requestMatchers("/fonts/**").permitAll()
                     .requestMatchers("/images/**").permitAll()
                     .requestMatchers("/403**").permitAll()
+                    .requestMatchers("/*").permitAll()
                     .requestMatchers("/sports/**").hasAnyRole("USER", "ADMIN"))
             .formLogin(form ->
                     form.defaultSuccessUrl("/sports", true)

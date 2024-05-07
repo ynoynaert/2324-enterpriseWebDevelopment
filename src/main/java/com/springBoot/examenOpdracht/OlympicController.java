@@ -1,6 +1,6 @@
 package com.springBoot.examenOpdracht;
 
-import java.util.Comparator;
+import java.security.Principal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -11,19 +11,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import domain.Competition;
+import domain.Role;
 import domain.Sport;
 import domain.Stadium;
 import repository.CompetitionRepository;
 import repository.SportRepository;
 import repository.StadiumRepository;
 import repository.TicketRepository;
+import repository.UserRepository;
 import service.OlympicService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -38,10 +41,21 @@ public class OlympicController {
 	@Autowired
 	private StadiumRepository stadiumRepository;
 	@Autowired
-	private TicketRepository ticektRepository;	
+	private TicketRepository ticketRepository;
+	@Autowired
+	private UserRepository usersRepository;
 	@Autowired
 	private OlympicService olympicService;
-
+	
+    @ModelAttribute("username")
+    public String username(Principal principal) {
+        return principal.getName();
+    }
+    @ModelAttribute("role")
+    public Role role(Principal principal) {
+        return usersRepository.findByUsername(principal.getName()).getRole();
+    }
+	
 	@GetMapping
 	public String listSport(Model model) {
 		model.addAttribute("sportList", sportRepository.findAll());
@@ -73,7 +87,7 @@ public class OlympicController {
 	}
 	
 	@PostMapping("/addCompetition/{id}")
-	public String addCompetitionToSport(@PathVariable("id") long sportId, Competition comp, BindingResult bindingResult, Model model, Locale locale) {
+	public String addCompetitionToSport(@RequestParam("id") long sportId, Competition comp, BindingResult bindingResult, Model model, Locale locale) {
 		if (bindingResult.hasErrors()) {
 			// model.addAttribute("message", new Message("error", messageSource.getMessage("", null, locale)));  //TODO
 			return "addCompetition";
@@ -99,9 +113,9 @@ public class OlympicController {
 		return "buyTickets";
 	}
 	
-	//TODO: @PostMapping
+
 	@PostMapping("/{id}/buyTickets/{compId}")
-	public String buyTickets(@PathVariable("id") long sportId, Competition comp, BindingResult bindingResult, Model model, Locale locale) {
+	public String buyTickets(@RequestParam("id") long sportId, Competition comp, BindingResult bindingResult, Model model, Locale locale) {
 		if (bindingResult.hasErrors()) {
 			// model.addAttribute("message", new Message("error", messageSource.getMessage("", null, locale)));  //TODO
 			return "buyTickets";
@@ -123,5 +137,7 @@ public class OlympicController {
 		//TODO: verder uitwerken als account effectief bestaat
 		return "overviewTickets";
 	}
+	
+	//TODO: @PostMapping
 	
 }

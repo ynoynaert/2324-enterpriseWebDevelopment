@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Olympics 2024</title>
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
@@ -14,9 +14,12 @@
 		<header class="navbar" >
         	<h1 class="titel">Paris 2024</h1>
         	<div class="user-info">
-            	<span>Admin</span>
-            	<span>iets@iets.com</span>
-            	<button class="btn-header">Log out</button>
+            	<span th:text="${role}"></span>
+            	<span th:text="${username}"></span>
+            	<form th:action="@{/logout}" method="post">
+                	<input class="btn-header" type="submit" value="Logout" />
+                	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        		</form>
         	</div>
     	</header>
 	</div>
