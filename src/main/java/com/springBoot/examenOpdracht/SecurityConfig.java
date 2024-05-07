@@ -32,9 +32,9 @@ public class SecurityConfig {
                     .requestMatchers("/fonts/**").permitAll()
                     .requestMatchers("/images/**").permitAll()
                     .requestMatchers("/403**").permitAll()
-                    .requestMatchers("/*").permitAll()
+                    .requestMatchers("/*").hasAnyRole("USER", "ADMIN")
                     .requestMatchers("/sports/*").hasAnyRole("USER", "ADMIN")
-                    .requestMatchers("/sports/addCompetition/*").hasRole("ADMIN")
+                    .requestMatchers("/sports/*/addCompetition").hasRole("ADMIN")
                     .requestMatchers("/sports/*/buyTickets/*").hasRole("USER")
                     .requestMatchers("/sports/*/tickets").hasRole("USER"))
             .formLogin(form ->

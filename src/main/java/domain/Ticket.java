@@ -2,13 +2,13 @@ package domain;
 
 import java.io.Serializable;
 
-import org.hibernate.validator.constraints.Range;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -31,7 +31,8 @@ public class Ticket implements Serializable {
     private Long id;
 	
     @NotNull(message = "Ticket price is required") @Getter @Setter
-    @Range(min = 0, max = 149, message = "Price per ticket must be between 0 and 149")
+    @DecimalMin(value = "0.01")
+    @DecimalMax(value = "149.99")
     private double price;
 
 	public Ticket(double price) {

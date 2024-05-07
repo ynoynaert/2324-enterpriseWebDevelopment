@@ -37,13 +37,12 @@
 					<td th:text="|€ ${#numbers.formatDecimal(c.price, 2, 2)}|"></td>
 					<!-- TODO: aanpassen naar tickets bought voor een user -->
 					<td th:text=${c.totalTickets}></td>
-					<td><a class="btn" th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a></td>
+					<td><a  class="btn" th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a></td>
 				</tr>
 			</th:block>
 
 		</table>
-		 <!--TODO: href competition  -->
-		<a th:href="|/sports/addCompetition/${sport.id}|"class="btn">Add competition</a>
+		<a th:href="|/sports/${sport.id}/addCompetition|"class="btn">Add competition</a>
 	</div>
 </body>
 

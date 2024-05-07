@@ -1,10 +1,10 @@
 package com.springBoot.examenOpdracht;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -47,49 +47,49 @@ public class InitDataConfig implements CommandLineRunner {
     	Stadium s6 = new Stadium("Athletics Stadium");
     	Stadium s11 = new Stadium("Olympic Athletics Park");
     	Stadium s16 = new Stadium("Olympic Track Field");
-    	Competition c1 = new Competition(LocalDate.of(2024, 5, 15), "14:00", "13579", "14579", "Sprint & High Jump", null, 50, 25.0, 48);
-    	Competition c6 = new Competition(LocalDate.of(2024, 5, 17), "15:30", "24680", "25680", "Long Jump & Discus Throw", null, 40, 22.5, 1);
-    	Competition c11 = new Competition(LocalDate.of(2024, 5, 16), "13:00", "35791", "36791", "Marathon & Shot Put", null, 46, 20.0, 1);
-    	Competition c16 = new Competition(LocalDate.of(2024, 5, 17), "11:30", "46802", "47802", "Hurdles & Pole Vault", null, 37, 23.0, 15);
+    	Competition c1 = new Competition(LocalDate.of(2024, 5, 15), LocalTime.of(14, 0), "13579", "14579", "Sprint & High Jump", null, 50, 25.0, 48);
+    	Competition c6 = new Competition(LocalDate.of(2024, 5, 17), LocalTime.of(15, 30), "24680", "25680", "Long Jump & Discus Throw", null, 40, 22.5, 1);
+    	Competition c11 = new Competition(LocalDate.of(2024, 5, 16), LocalTime.of(13, 0), "35791", "36791", "Marathon & Shot Put", null, 46, 20.0, 1);
+    	Competition c16 = new Competition(LocalDate.of(2024, 5, 17), LocalTime.of(11, 30), "46802", "47802", "Hurdles & Pole Vault", null, 37, 23.0, 15);
 
     	Sport gymnastics = new Sport("Gymnastics");
     	Stadium s2 = new Stadium("Gymnastics Arena");
     	Stadium s7 = new Stadium("Gymnastics Palace");
     	Stadium s12 = new Stadium("Gymnastics Hall");
     	Stadium s17 = new Stadium("Gymnastics Center");    	
-    	Competition c2 = new Competition(LocalDate.of(2024, 5, 18), "11:00", "57913", "58913", "Floor Exercise & Rings", null, 30, 30.0, 16);
-    	Competition c7 = new Competition(LocalDate.of(2024, 5, 19), "10:00", "68024", "69024", "Vault & Parallel Bars", null, 25, 35.0, 23);
-    	Competition c12 = new Competition(LocalDate.of(2024, 5, 18), "14:30", "79135", "70135", "Balance Beam & Horizontal Bar", null, 35, 32.5, 20);
-    	Competition c17 = new Competition(LocalDate.of(2024, 5, 19), "16:00", "80246", "81246", "Trampoline & Uneven Bars", null, 30, 27.5, 10);
+    	Competition c2 = new Competition(LocalDate.of(2024, 5, 18), LocalTime.of(11, 0), "57913", "58913", "Floor Exercise & Rings", null, 30, 30.0, 16);
+    	Competition c7 = new Competition(LocalDate.of(2024, 5, 19), LocalTime.of(10, 0), "68024", "69024", "Vault & Parallel Bars", null, 25, 35.0, 23);
+    	Competition c12 = new Competition(LocalDate.of(2024, 5, 18), LocalTime.of(14, 30), "79135", "70135", "Balance Beam & Horizontal Bar", null, 35, 32.5, 20);
+    	Competition c17 = new Competition(LocalDate.of(2024, 5, 19), LocalTime.of(16, 0), "80246", "81246", "Trampoline & Uneven Bars", null, 30, 27.5, 10);
 
     	Sport volleyball = new Sport("Volleybal");
     	Stadium s3 = new Stadium("Volleyball Complex");
     	Stadium s8 = new Stadium("Volleyball Center");
     	Stadium s13 = new Stadium("Volleyball Arena");
     	Stadium s18 = new Stadium("Volleyball Hall");
-    	Competition c3 = new Competition(LocalDate.of(2024, 5, 20), "17:30", "91357", "92357", "Indoor Volleyball", null, 28, 20.0, 8);
-    	Competition c8 = new Competition(LocalDate.of(2024, 5, 21), "16:45", "12468", "13468", "Beach Volleyball", null, 27, 18.0, 7);
-    	Competition c13 = new Competition(LocalDate.of(2024, 5, 20), "19:15", "23579", "14579","Beach Volleyball", "Mixed Volleyball", 19, 25.0, 9);
-    	Competition c18 = new Competition(LocalDate.of(2024, 5, 21), "15:45", "34680", "25680", "Sitting Volleyball", null, 13, 22.0, 3);
+    	Competition c3 = new Competition(LocalDate.of(2024, 5, 20), LocalTime.of(17, 30), "91357", "92357", "Indoor Volleyball", null, 28, 20.0, 8);
+    	Competition c8 = new Competition(LocalDate.of(2024, 5, 21), LocalTime.of(16, 45), "12468", "13468", "Beach Volleyball", null, 27, 18.0, 7);
+    	Competition c13 = new Competition(LocalDate.of(2024, 5, 20), LocalTime.of(19, 15), "23579", "14579","Beach Volleyball", "Mixed Volleyball", 19, 25.0, 9);
+    	Competition c18 = new Competition(LocalDate.of(2024, 5, 21), LocalTime.of(15, 45), "34680", "25680", "Sitting Volleyball", null, 13, 22.0, 3);
 
     	Sport basketball = new Sport("Basketball");
     	Stadium s4 = new Stadium("Basketball Arena");
     	Stadium s9 = new Stadium("Basketball Complex");
     	Stadium s14 = new Stadium("Basketball Stadium");
     	Stadium s19 = new Stadium("Basketball Hall");
-    	Competition c4 = new Competition(LocalDate.of(2024, 5, 22), "19:00", "45791", "36791", "3x3 Basketball", null, 46, 35.0, 40);
-    	Competition c9 = new Competition(LocalDate.of(2024, 5, 23), "18:30", "56802", "47802", "Women's Basketball", "Men's Basketball", 45, 28.0, 30);
-    	Competition c14 = new Competition(LocalDate.of(2024, 5, 22), "20:30", "67913", "58913", "Slam Dunk Contest", null, 40, 30.0, 20);
-    	Competition c19 = new Competition(LocalDate.of(2024, 5, 23), "17:45", "78024", "69024", "Women's Basketball", "3x3 Basketball", 50, 32.0, 1);
+    	Competition c4 = new Competition(LocalDate.of(2024, 5, 22), LocalTime.of(19, 0), "45791", "36791", "3x3 Basketball", null, 46, 35.0, 40);
+    	Competition c9 = new Competition(LocalDate.of(2024, 5, 23), LocalTime.of(18, 30), "56802", "47802", "Women's Basketball", "Men's Basketball", 45, 28.0, 30);
+    	Competition c14 = new Competition(LocalDate.of(2024, 5, 22), LocalTime.of(20, 30), "67913", "58913", "Slam Dunk Contest", null, 40, 30.0, 20);
+    	Competition c19 = new Competition(LocalDate.of(2024, 5, 23), LocalTime.of(17, 45), "78024", "69024", "Women's Basketball", "3x3 Basketball", 50, 32.0, 1);
 
     	Sport judo = new Sport("Judo");
     	Stadium s5 = new Stadium("Judo Center");
     	Stadium s10 = new Stadium("Judo Arena");
     	Stadium s15 = new Stadium("Judo Hall");
-    	Competition c5 = new Competition(LocalDate.of(2024, 5, 25), "13:45", "89135", "70135", "Lightweight & Heavyweight", null, 40, 40.0, 21);
-    	Competition c10 = new Competition(LocalDate.of(2024, 5, 26), "12:15", "90246", "81246", "Team Judo", null, 35, 45.0, 20);
-    	Competition c15 = new Competition(LocalDate.of(2024, 5, 25), "16:00", "13570", "92357", "Individual Kata", null, 40, 38.0, 4);
-    	Competition c20 = new Competition(LocalDate.of(2024, 5, 26), "14:45", "12469", "13468", null, null, 35, 42.0, 1);
+    	Competition c5 = new Competition(LocalDate.of(2024, 5, 25), LocalTime.of(13, 45), "89135", "70135", "Lightweight & Heavyweight", null, 40, 40.0, 21);
+    	Competition c10 = new Competition(LocalDate.of(2024, 5, 26), LocalTime.of(12, 15), "90246", "81246", "Team Judo", null, 35, 45.0, 20);
+    	Competition c15 = new Competition(LocalDate.of(2024, 5, 25), LocalTime.of(16, 0), "13570", "92357", "Individual Kata", null, 40, 38.0, 4);
+    	Competition c20 = new Competition(LocalDate.of(2024, 5, 26), LocalTime.of(14, 45), "12469", "13468", null, null, 35, 42.0, 1);
 
     	c1.setSport(athletics);
     	c6.setSport(athletics);

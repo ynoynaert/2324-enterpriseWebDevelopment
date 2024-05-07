@@ -17,6 +17,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import service.MyUserDetailsService;
 import service.OlympicService;
 import service.OlympicServiceImpl;
+import validator.CompetitionValidator;
 
 @SpringBootApplication
 @EnableJpaRepositories("repository")
@@ -32,11 +33,6 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
         registry.addRedirectViewController("/", "/sports");
         registry.addViewController("/403").setViewName("403");
     }
-
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addFormatter(dateFormatter());
-    }
     
     @Bean
     OlympicService olympicService() {
@@ -50,13 +46,18 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
         return slr;
     }
 
-    @Bean
-    DateFormatter dateFormatter() {
-        return new DateFormatter();
-    }
-    
+//    @Bean
+//    DateFormatter dateFormatter() {
+//        return new DateFormatter();
+//    }
+//    
     @Bean
     UserDetailsService myUserDetailsService() {
         return new MyUserDetailsService();
     }
+    
+	@Bean
+	CompetitionValidator competitionValidator() {
+		return new CompetitionValidator();
+	}
 }
