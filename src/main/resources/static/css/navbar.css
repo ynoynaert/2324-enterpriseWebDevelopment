@@ -1,3 +1,4 @@
+/* Algemene stijlen */
 @font-face {
     font-family: "Font Family Name";
     src: url("../fonts/Paris2024-Variable.ttf");
@@ -7,6 +8,11 @@
     font-family: "Font Family Name", sans-serif;
     margin: 0;
     padding: 0;
+}
+
+body {
+    justify-content: center;
+    align-items: center;
 }
 
 .navbar {
@@ -34,7 +40,7 @@
     margin-right: 10px;
 }
 
-.btn-header {
+.logout {
     background-color: #ffffff00;
     border: none;
     color: rgb(255, 255, 255);
@@ -47,4 +53,20 @@
     transition-duration: 0.4s;
     cursor: pointer;
     border-radius: 4px;
+}
+
+
+.btn {
+  background-color: #ffffff00;
+  border: none;
+  color: rgb(0, 0, 0);
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 4px;
 }
