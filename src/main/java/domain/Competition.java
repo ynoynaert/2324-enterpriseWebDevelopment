@@ -77,14 +77,13 @@ public class Competition implements Serializable {
     private List<Ticket> tickets = new ArrayList<>();
 
     
-    public Competition (LocalDate date, String time, Stadium stadium, String olympicNumber1, String olympicNumber2, 
+    public Competition (LocalDate date, String time, String olympicNumber1, String olympicNumber2, 
     		String discipline1, String discipline2, int totalTickets, double price, int ticketLeft) {
     	setDate(date);
     	setDiscipline1(discipline1);
     	setDiscipline2(discipline2);
     	setOlympicNumber1(olympicNumber1);
     	setOlympicNumber2(olympicNumber2);
-    	setStadium(stadium);
     	setTime(time);
     	setPrice(price);
     	setTotalTickets(totalTickets);

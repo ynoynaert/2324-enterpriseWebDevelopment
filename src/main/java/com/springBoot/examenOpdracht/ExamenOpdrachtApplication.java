@@ -8,11 +8,13 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import service.MyUserDetailsService;
 import service.OlympicService;
 import service.OlympicServiceImpl;
 
@@ -28,6 +30,7 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addRedirectViewController("/", "/sports");
+        registry.addViewController("/403").setViewName("403");
     }
 
     @Override
@@ -50,5 +53,10 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
     @Bean
     DateFormatter dateFormatter() {
         return new DateFormatter();
+    }
+    
+    @Bean
+    UserDetailsService myUserDetailsService() {
+        return new MyUserDetailsService();
     }
 }

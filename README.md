@@ -4,8 +4,8 @@ Examenopdracht EWDJ Youna Noynaert
 **Login gegevens**
 
 > Admin
-- Email:
-- Password:
+- Email: <account@admin.com>
+- Password: PasswordAdmin
 > User
-- Email:
-- Password:
+- Email: <account@user.com>
+- Password: PasswordUser

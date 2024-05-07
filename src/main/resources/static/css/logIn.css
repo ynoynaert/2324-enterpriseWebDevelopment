@@ -17,7 +17,7 @@ body {
   background-color: #f0f0f0;
 }
 .container {
-  width: 400px;
+  width: 500px;
   margin: 25px;
   background-color: #fff;
   border-radius: 8px;
@@ -59,4 +59,9 @@ input[type="password"] {
 
 img {
   width: 200px;
+  margin: 20px;
+}
+
+h2 {
+	margin-bottom: 8px;
 }

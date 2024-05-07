@@ -16,13 +16,12 @@ public class LoginController {
 	@GetMapping
 	public String login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, Model model) {
-		log.info("Get login");
 
 		if (error != null) {
-			model.addAttribute("error", "Foute naam of paswoord!");
+			model.addAttribute("error", "Incorrect email or password.");
 		}
 		if (logout != null) {
-			model.addAttribute("msg", "Je bent succesvol uitgelogd.");
+			model.addAttribute("msg", "You have succesfully logged out.");
 		}
 		return "logIn";
 	}
