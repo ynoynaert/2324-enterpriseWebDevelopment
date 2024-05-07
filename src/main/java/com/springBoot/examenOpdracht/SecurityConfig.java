@@ -33,7 +33,10 @@ public class SecurityConfig {
                     .requestMatchers("/images/**").permitAll()
                     .requestMatchers("/403**").permitAll()
                     .requestMatchers("/*").permitAll()
-                    .requestMatchers("/sports/**").hasAnyRole("USER", "ADMIN"))
+                    .requestMatchers("/sports/*").hasAnyRole("USER", "ADMIN")
+                    .requestMatchers("/sports/addCompetition/*").hasRole("ADMIN")
+                    .requestMatchers("/sports/*/buyTickets/*").hasRole("USER")
+                    .requestMatchers("/sports/*/tickets").hasRole("USER"))
             .formLogin(form ->
                     form.defaultSuccessUrl("/sports", true)
                         .loginPage("/login")

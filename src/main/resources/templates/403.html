@@ -7,7 +7,12 @@
 </head>
 <body>
 	<!-- Navbar -->
-	<h1>HTTP Status 403 - Access is denied</h1>
-	<a th:href="/sports">Go Home</a>
+	<div th:include="navbar :: copy"></div>
+	
+	<div class="tab"> 
+		<h2>HTTP Status 403 - Access is denied</h2>
+		<a th:href="@{/sports}" class="btn">Go Home</a>
+	</div>
+
 </body>
 </html>

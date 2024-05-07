@@ -13,6 +13,7 @@
 		<header class="navbar" >
         	<h1 class="titel">Paris 2024</h1>
         	<div class="user-info">
+        		<a th:href="@{/sports}" class="home">Home</a>
             	<span th:text="${role}"></span>
             	<span th:text="${username}"></span>
             	<form th:action="@{/logout}" method="post">

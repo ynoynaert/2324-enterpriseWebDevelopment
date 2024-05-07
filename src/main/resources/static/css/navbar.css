@@ -55,6 +55,20 @@ body {
     border-radius: 4px;
 }
 
+.home {
+  background-color: #ffffff00;
+  border: none;
+  color: rgb(255, 255, 255);
+  padding: 8px 0px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 10px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 4px;
+}
 
 .btn {
   background-color: #ffffff00;
