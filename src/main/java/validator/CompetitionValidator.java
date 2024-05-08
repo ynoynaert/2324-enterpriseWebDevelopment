@@ -29,6 +29,10 @@ public class CompetitionValidator implements Validator {
 		// TIME
 		if (competition.getTime().isBefore(LocalTime.of(8, 0)))
 			errors.rejectValue("time", "time has to be after 8:00");
+		// DISCIPLINES
+		if(competition.getDisciplines().size() > 2) {
+			errors.rejectValue("disciplines", "max 2 disciplines allowed");
+		}
 		// OLYMPIC NUMBER ONE
 		if (competition.getOlympicNumber1().length() != 5)
 			errors.rejectValue("olympicNumber1", "Olympic number1 must be 5 digits long");

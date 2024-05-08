@@ -44,3 +44,12 @@ h2 {
 	clear: both;
 	width: 150px;
 }
+
+.check {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.check label {
+	margin-left: 4px;
+}

@@ -18,8 +18,7 @@
 				<th>Date</th>
 				<th>Time</th>
 				<th>Stadium</th>
-				<th>Discipline #1</th>
-				<th>Discipline #2</th>
+				<th>Discipline(s)</th>
 				<th>Tickets left</th>
 				<th>Price</th>
 				<th th:if="${role == 'USER'}">No. of tickets bought</th>
@@ -31,10 +30,9 @@
 					<td th:text="${{c.date}}"></td>
 					<td th:text="${c.time}"></td>
 					<td th:text="${c.stadium.name}"></td>
-					<td th:text="${c.discipline1}"></td>
-					<td th:text="${c.discipline2}"></td>
+					<td th:text="${#strings.listJoin(c.disciplines.![name], ', ')}"></td>
 					<td th:text="${c.ticketLeft}"></td>
-					<td th:text="|€ ${#numbers.formatDecimal(c.price, 2, 2)}|"></td>
+					<td th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></td>
 					<!-- TODO: aanpassen naar tickets bought voor een user -->
 					<td th:if="${role == 'USER'}">5</td>
 					<td th:if="${role == 'USER'}"><a class="btn"

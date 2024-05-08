@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import domain.Competition;
+import domain.Discipline;
 import domain.Sport;
 import domain.Stadium;
 import jakarta.validation.Valid;
 import repository.CompetitionRepository;
+import repository.DisciplineRepository;
 import repository.SportRepository;
 import repository.StadiumRepository;
 import repository.TicketRepository;
@@ -38,6 +40,8 @@ public class OlympicController {
 	private SportRepository sportRepository;
 	@Autowired
 	private CompetitionRepository competitionRepository;
+	@Autowired
+	private DisciplineRepository disciplineRepository;
 	@Autowired
 	private StadiumRepository stadiumRepository;
 	@Autowired
@@ -85,9 +89,11 @@ public class OlympicController {
 			return "redirect:/sports/{id}";
 
 		List<Stadium> stad = stadiumRepository.findBySport(sport.get());
+		List<Discipline> disc = disciplineRepository.findBySport(sport.get());
 		model.addAttribute("competition", new Competition());
 		model.addAttribute("sport", sport.get());
 		model.addAttribute("stadiums", stad);
+		model.addAttribute("disciplines", disc);
 		return "addCompetition";
 	}
 
@@ -98,7 +104,11 @@ public class OlympicController {
 		if (!sport.isPresent())
 			return "redirect:/sports/{id}";
 		Sport s = sport.get();
+		List<Stadium> stad = stadiumRepository.findBySport(s);
+		List<Discipline> disc = disciplineRepository.findBySport(s);
 		model.addAttribute("sport", s);
+		model.addAttribute("stadiums", stad);
+		model.addAttribute("disciplines", disc);
 
 		competitionValidator.validate(competition, bindingResult);
 
@@ -109,6 +119,7 @@ public class OlympicController {
 		}
 
 		s.addCompetition(competition);
+		
 		competition.setSport(s);
 		competition.setTicketLeft(competition.getTotalTickets());
 		competitionRepository.save(competition);

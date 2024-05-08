@@ -18,37 +18,39 @@
 			th:object="${competition}">
 			<input type="hidden" name="id" th:value="${sport.id}" /> <label
 				for="date">Date:</label> <input type="date" id="date" class="fields"
-				th:field="*{date}" name="date" required><br>
-			<br> <span th:if="${#fields.hasErrors('date')}"
-				th:errorclass="error" th:errors="*{date}"></span> <label for="hour">Time:</label>
-			<input type="time" id="time" class="fields" th:field="*{time}"
-				required><br>
+				th:field="*{date}" name="date" required><br> <br>
+			<span th:if="${#fields.hasErrors('date')}" th:errorclass="error"
+				th:errors="*{date}"></span> <label for="hour">Time:</label> <input
+				type="time" id="time" class="fields" th:field="*{time}" required><br>
 			<br> <span th:if="${#fields.hasErrors('time')}"
 				th:errorclass="error" th:errors="*{time}"></span> <label
 				for="stadium">Stadium:</label> <select id="stadium" class="fields"
 				th:field="*{stadium}" required>
 				<option th:each="stadium : ${stadiums}" th:value="${stadium.id}"
 					th:text="${stadium.name}"></option>
-			</select><br>
-			<br> <span th:if="${#fields.hasErrors('stadium')}"
+			</select><br> <br> <span th:if="${#fields.hasErrors('stadium')}"
 				th:errorclass="error" th:errors="*{stadium}"></span> <label
-				for="discipline">Discipline #1:</label> <input type="text"
-				id="discipline1" class="fields" th:field="*{discipline1}"><br>
-			<br> <span th:if="${#fields.hasErrors('discipline1')}"
-				th:errorclass="error" th:errors="*{discipline1}"></span> <label
-				for="discipline">Discipline #2:</label> <input type="text"
-				id="discipline2" class="fields" th:field="*{discipline2}"><br>
-			<br> <span th:if="${#fields.hasErrors('discipline2')}"
-				th:errorclass="error" th:errors="*{discipline2}"></span> <label
-				for="olympic1">Olympic #1:</label> <input type="text" id="olympic1"
-				class="fields" th:field="*{olympicNumber1}" required><br>
+				for="stadium">Discipline(s):</label> <br>
+			<div class="check" th:each="discipline : ${disciplines}">
+				<input type="checkbox" id="discipline" 
+					th:id="'discipline' + ${discipline.id}"
+					th:name="'disciplines[' + ${discipline.id} + ']'"
+					th:value="${discipline.id}"> <label
+					th:for="${'discipline' + discipline.id}"
+					th:text="${discipline.name}"></label><br>
+			</div>
+			<br>
+			<!-- <span th:if="${#fields.hasErrors('discipline')}"
+				th:errorclass="error" th:errors="*{discipline}"></span> -->
+			<label for="olympic1">Olympic #1:</label> <input type="text"
+				id="olympic1" class="fields" th:field="*{olympicNumber1}" required><br>
 			<br> <span th:if="${#fields.hasErrors('olympicNumber1')}"
 				th:errorclass="error" th:errors="*{olympicNumber1}"></span> <label
 				for="olympic2">Olympic #2:</label> <input type="text" id="olympic2"
 				class="fields" th:field="*{olympicNumber2}" required><br>
 			<br> <span th:if="${#fields.hasErrors('olympicNumber2')}"
 				th:errorclass="error" th:errors="*{olympicNumber2}"></span> <label
-				for="price">Price per Ticket:</label> <input type="number"
+				for="price">Price per Ticket:</label> <input type="number" step="0.01"
 				id="price" class="fields" th:field="*{price}" required><br>
 			<br> <span th:if="${#fields.hasErrors('price')}"
 				th:errorclass="error" th:errors="*{price}"></span> <label
