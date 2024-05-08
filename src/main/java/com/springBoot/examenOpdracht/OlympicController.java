@@ -1,9 +1,12 @@
 package com.springBoot.examenOpdracht;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -99,7 +102,7 @@ public class OlympicController {
 
 	@PostMapping("/{id}/addCompetition")
 	public String addCompetitionToSport(@RequestParam("id") long id, @Valid Competition competition,
-			BindingResult bindingResult, Model model) {
+	        BindingResult bindingResult, @RequestParam Map<String, String> requestParams, Model model) {
 		Optional<Sport> sport = sportRepository.findById(id);
 		if (!sport.isPresent())
 			return "redirect:/sports/{id}";
@@ -117,6 +120,20 @@ public class OlympicController {
 			// messageSource.getMessage("", null, locale))); //TODO
 			return "addCompetition";
 		}
+		
+		Set<Discipline> selectedDisciplines = new HashSet<>();
+	    for (Map.Entry<String, String> entry : requestParams.entrySet()) {
+	        if (entry.getKey().startsWith("disciplines")) {
+	            long disciplineId = Long.parseLong(entry.getValue());
+	            Optional<Discipline> disciplineOptional = disciplineRepository.findById(disciplineId);
+	            disciplineOptional.ifPresent(selectedDisciplines::add);
+	        }
+	    }
+
+	    if (!selectedDisciplines.isEmpty()) {
+	    	for(Discipline disci : selectedDisciplines)
+	    		competition.addDisciplines(disci);
+	    }
 
 		s.addCompetition(competition);
 		
