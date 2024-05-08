@@ -18,30 +18,35 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity @Data @NoArgsConstructor (access = AccessLevel.PROTECTED) @AllArgsConstructor @Table(name = "users") @Builder
+@Entity
+@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Table(name = "users")
+@Builder
 public class MyUser implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 //	@OneToMany(mappedBy = "owner") @Getter
 //	private List<Ticket> tickets = new ArrayList<>();
-	
+
 	@Column(nullable = false, unique = true)
 	private String username;
-	
+
 	@Column(nullable = false)
 	private String password;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
-    private Role role;
-	
+	private Role role;
+
 //	public void addTicket(Ticket ticket) {
 //		tickets.add(ticket);
 //	}
-	
+
 }

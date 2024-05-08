@@ -11,26 +11,24 @@ import org.springframework.format.Formatter;
 
 public class DateFormatter implements Formatter<LocalDate> {
 
-    @Autowired
-    private MessageSource messageSource;
+	@Autowired
+	private MessageSource messageSource;
 
-    public DateFormatter() {
-        super();
-    }
+	public DateFormatter() {
+		super();
+	}
 
 	@Override
 	public String print(LocalDate object, Locale locale) {
-      return object.format(formatter(locale));
+		return object.format(formatter(locale));
 	}
 
 	@Override
 	public LocalDate parse(String text, Locale locale) throws ParseException {
 		return LocalDate.parse(text, formatter(locale));
 	}
-	
+
 	private DateTimeFormatter formatter(Locale locale) {
-		return DateTimeFormatter.ofPattern(
-				messageSource.getMessage("date.format.pattern", null, locale), 
-				locale);
+		return DateTimeFormatter.ofPattern(messageSource.getMessage("date.format.pattern", null, locale), locale);
 	}
 }

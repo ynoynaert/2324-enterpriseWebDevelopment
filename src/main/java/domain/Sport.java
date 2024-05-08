@@ -18,34 +18,39 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity @NoArgsConstructor(access = AccessLevel.PROTECTED)@EqualsAndHashCode(exclude = "id")
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode(exclude = "id")
 public class Sport implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Id @Getter
+
+	@Id
+	@Getter
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Getter @Setter @NotBlank
+
+	@Getter
+	@Setter
+	@NotBlank
 	private String name;
 
 	@Getter
-	@OneToMany(mappedBy="sport")
-    private List<Competition> competitions = new ArrayList<>();
-	
+	@OneToMany(mappedBy = "sport")
+	private List<Competition> competitions = new ArrayList<>();
+
 	@Getter
-	@OneToMany(mappedBy="sport")
+	@OneToMany(mappedBy = "sport")
 	private List<Stadium> stadiums = new ArrayList<>();
-	
+
 	public Sport(String name) {
 		setName(name);
 	}
-	
+
 	public void addCompetition(Competition comp) {
 		competitions.add(comp);
 	}
-	
+
 	public void addStadium(Stadium stad) {
 		stadiums.add(stad);
 	}

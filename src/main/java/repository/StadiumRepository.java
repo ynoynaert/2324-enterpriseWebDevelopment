@@ -9,6 +9,6 @@ import domain.Sport;
 import domain.Stadium;
 
 @Repository
-public interface StadiumRepository extends CrudRepository<Stadium, Long>{
+public interface StadiumRepository extends CrudRepository<Stadium, Long> {
 	List<Stadium> findBySport(Sport s);
 }

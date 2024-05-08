@@ -1,26 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olympics 2024</title>
-    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title th:text="#{titel}"></title>
+<link rel="stylesheet" th:href="@{/css/navbar.css}">
 </head>
 
 <body>
 	<div th:fragment="copy">
-		<header class="navbar" >
-        	<h1 class="titel">Paris 2024</h1>
-        	<div class="user-info">
-        		<a th:href="@{/sports}" class="home">Home</a>
-            	<span th:text="${role}"></span>
-            	<span th:text="${username}"></span>
-            	<form th:action="@{/logout}" method="post">
-                	<input type="submit" value="Logout" class="logout"/>
-                	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        		</form>
-        	</div>
-    	</header>
+		<header class="navbar">
+			<h1 class="titel" th:text="#{titelNavbar}"></h1>
+			<div class="user-info">
+				<a th:href="@{/sports}" class="home" th:text="#{home}"></a> <span
+					th:text="${role}"></span> <span th:text="${username}"></span>
+				<form th:action="@{/logout}" method="post">
+					<input type="submit" value="Logout" class="logout" /> <input
+						type="hidden" th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}" />
+				</form>
+			</div>
+		</header>
 	</div>
 </body>

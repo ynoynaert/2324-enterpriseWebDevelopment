@@ -2,39 +2,37 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olympics 2024</title>
-	<link rel="stylesheet" th:href="@{/css/overview.css}" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olympics 2024</title>
+<link rel="stylesheet" th:href="@{/css/overview.css}" />
 </head>
 
 <body>
 	<div th:include="navbar :: copy"></div>
-	
-  <div class="tab">
-    <table>
-      <thead>
-        <tr>
-          <th>Competition</th>
-          <th>Sport</th>
-          <th>Day</th>
-          <th>Hour</th>
-          <th>No. of Tickets Bought</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Football Championship</td>
-          <td>Football</td>
-          <td>May 5th, 2024</td>
-          <td>15:00</td>
-          <td>2</td>
-          <td>$50.00</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+
+	<div class="tab">
+		<table>
+			<thead>
+				<tr>
+					<th>Sport</th>
+					<th>Day</th>
+					<th>Hour</th>
+					<th>No. of tickets bought</th>
+					<th>Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Football</td>
+					<td>May 5th, 2024</td>
+					<td>15:00</td>
+					<td>2</td>
+					<td>$50.00</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
 </body>
 

@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import domain.Competition;
-import domain.Role;
 import domain.Sport;
 import domain.Stadium;
 import jakarta.validation.Valid;
@@ -57,8 +55,8 @@ public class OlympicController {
 	}
 
 	@ModelAttribute("role")
-	public Role role(Principal principal) {
-		return usersRepository.findByUsername(principal.getName()).getRole();
+	public String role(Principal principal) {
+		return usersRepository.findByUsername(principal.getName()).getRole().toString();
 	}
 
 	@GetMapping
@@ -81,7 +79,7 @@ public class OlympicController {
 	}
 
 	@GetMapping("/{id}/addCompetition")
-	public String showAddCompetitionToSport(@PathVariable("id") long id, Model model, Authentication authentication) {
+	public String showAddCompetitionToSport(@PathVariable("id") long id, Model model) {
 		Optional<Sport> sport = sportRepository.findById(id);
 		if (!sport.isPresent())
 			return "redirect:/sports/{id}";

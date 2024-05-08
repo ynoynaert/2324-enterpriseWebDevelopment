@@ -24,38 +24,38 @@ import validator.CompetitionValidator;
 @EntityScan("domain")
 public class ExamenOpdrachtApplication implements WebMvcConfigurer {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ExamenOpdrachtApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(ExamenOpdrachtApplication.class, args);
+	}
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addRedirectViewController("/", "/sports");
-        registry.addViewController("/403").setViewName("403");
-    }
-    
-    @Bean
-    OlympicService olympicService() {
-    	return new OlympicServiceImpl();
-    }
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addRedirectViewController("/", "/sports");
+		registry.addViewController("/403").setViewName("403");
+	}
 
-    @Bean
-    LocaleResolver myLocaleResolver() {
-        SessionLocaleResolver slr = new SessionLocaleResolver();
-        slr.setDefaultLocale(Locale.ENGLISH);
-        return slr;
-    }
+	@Bean
+	OlympicService olympicService() {
+		return new OlympicServiceImpl();
+	}
 
-//    @Bean
-//    DateFormatter dateFormatter() {
-//        return new DateFormatter();
-//    }
-//    
-    @Bean
-    UserDetailsService myUserDetailsService() {
-        return new MyUserDetailsService();
-    }
-    
+	@Bean
+	LocaleResolver myLocaleResolver() {
+		SessionLocaleResolver slr = new SessionLocaleResolver();
+		slr.setDefaultLocale(Locale.ENGLISH);
+		return slr;
+	}
+
+	@Bean
+	DateFormatter dateFormatter() {
+		return new DateFormatter();
+	}
+
+	@Bean
+	UserDetailsService myUserDetailsService() {
+		return new MyUserDetailsService();
+	}
+
 	@Bean
 	CompetitionValidator competitionValidator() {
 		return new CompetitionValidator();

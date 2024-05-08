@@ -2,30 +2,31 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olympics 2024</title>
-	<link rel="stylesheet" th:href="@{/css/overview.css}" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title th:text="#{titel}"></title>
+<link rel="stylesheet" th:href="@{/css/overview.css}" />
 </head>
 
 <body>
-
-
 	<div th:include="navbar :: copy"></div>
 
-    <div class="tab">
-        <table>
-            <h2>Olympic Sports</h2>            
-            <th:block th:each="sport: ${sportList}">
-                <tr>
-                    <td th:text="${sport.name}"></td>
-                    <td><a class="btn" th:href="|/sports/${sport.id}|">Details</a></td>
-                    <td><a class="btn" th:href="|/sports/${sport.id}/tickets|">Tickets</a></td> <!--TODO: href tickets  -->
-                </tr>
-            </th:block>
-        </table>
-    </div>
-    
+	<div class="tab">
+		<table>
+			<h2 th:text="#{header}"></h2>
+			<th:block th:each="sport: ${sportList}">
+				<tr>
+					<td th:text="${sport.name}"></td>
+					<td><a class="btn" th:href="|/sports/${sport.id}|"
+						th:text="|#{details}|"></a></td>
+					<td th:if="${role == 'USER'}"><a class="btn"
+						th:href="|/sports/${sport.id}/tickets|" th:text="|#{tickets}|"></a></td>
+					<!--TODO: href tickets  -->
+				</tr>
+			</th:block>
+		</table>
+	</div>
+
 
 </body>
 

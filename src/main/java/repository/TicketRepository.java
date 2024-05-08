@@ -10,7 +10,7 @@ import domain.Ticket;
 import domain.MyUser;
 
 @Repository
-public interface TicketRepository extends CrudRepository<Ticket, Long>{
+public interface TicketRepository extends CrudRepository<Ticket, Long> {
 	List<Ticket> findByCompetition(Competition c);
-	//List<Ticket> findByOwner(MyUser a);
+	// List<Ticket> findByOwner(MyUser a);
 }

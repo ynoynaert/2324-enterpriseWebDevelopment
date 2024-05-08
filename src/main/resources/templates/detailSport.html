@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Olympics 2024</title>
-	<link rel="stylesheet" th:href="@{/css/overview.css}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olympics 2024</title>
+<link rel="stylesheet" th:href="@{/css/overview.css}">
 </head>
 
 <body>
@@ -22,13 +22,13 @@
 				<th>Discipline #2</th>
 				<th>Tickets left</th>
 				<th>Price</th>
-				<th># Tickets bought</th>
-				<th></th>
+				<th th:if="${role == 'USER'}">No. of tickets bought</th>
+				<th th:if="${role == 'USER'}"></th>
 			</thead>
 
 			<th:block th:each="c: ${competitions}">
 				<tr class="row">
-					<td th:text="${c.date}"></td>
+					<td th:text="${{c.date}}"></td>
 					<td th:text="${c.time}"></td>
 					<td th:text="${c.stadium.name}"></td>
 					<td th:text="${c.discipline1}"></td>
@@ -36,13 +36,16 @@
 					<td th:text="${c.ticketLeft}"></td>
 					<td th:text="|€ ${#numbers.formatDecimal(c.price, 2, 2)}|"></td>
 					<!-- TODO: aanpassen naar tickets bought voor een user -->
-					<td th:text=${c.totalTickets}></td>
-					<td><a  class="btn" th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a></td>
+					<td th:if="${role == 'USER'}">5</td>
+					<td th:if="${role == 'USER'}"><a class="btn"
+						th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a></td>
 				</tr>
 			</th:block>
 
 		</table>
-		<a th:href="|/sports/${sport.id}/addCompetition|"class="btn">Add competition</a>
+		<a th:if="${role == 'ADMIN'}"
+			th:href="|/sports/${sport.id}/addCompetition|" class="btn">Add
+			competition</a>
 	</div>
 </body>
 

@@ -17,22 +17,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity@Getter @Setter @NoArgsConstructor(access = AccessLevel.PROTECTED) @EqualsAndHashCode(exclude = "id")
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode(exclude = "id")
 public class Stadium implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @NotBlank(message = "Stadium name is required") @Getter @Setter
-    private String name;
-	
-	@ManyToOne @Setter @Getter
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@NotBlank(message = "Stadium name is required")
+	@Getter
+	@Setter
+	private String name;
+
+	@ManyToOne
+	@Setter
+	@Getter
 	private Sport sport;
-	
-	@OneToMany @Getter
+
+	@OneToMany
+	@Getter
 	private List<Competition> competitions = new ArrayList<>();
 
 	public Stadium(String name) {

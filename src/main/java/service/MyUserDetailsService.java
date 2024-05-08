@@ -21,21 +21,20 @@ import repository.UserRepository;
 @NoArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
-    
-    
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MyUser user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(username);
-        }
-        return new User(user.getUsername(), user.getPassword(), covertAuthorities(user.getRole()));
-    }
+	@Autowired
+	private UserRepository userRepository;
 
-    private Collection<? extends GrantedAuthority> covertAuthorities(Role role) {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.toString()));
-    }
-    
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		MyUser user = userRepository.findByUsername(username);
+		if (user == null) {
+			throw new UsernameNotFoundException(username);
+		}
+		return new User(user.getUsername(), user.getPassword(), covertAuthorities(user.getRole()));
+	}
+
+	private Collection<? extends GrantedAuthority> covertAuthorities(Role role) {
+		return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role.toString()));
+	}
+
 }

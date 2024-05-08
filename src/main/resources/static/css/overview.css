@@ -2,46 +2,45 @@
 @import url("./navbar.css");
 
 @font-face {
-    font-family: "Font Family Name";
-    src: url("../fonts/Paris2024-Variable.ttf");
-  }
+	font-family: "Font Family Name";
+	src: url("../fonts/Paris2024-Variable.ttf");
+}
 
 * {
-    font-family: "Font Family Name", sans-serif;
-    margin: 0;
-    padding: 0;
+	font-family: "Font Family Name", sans-serif;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 }
 
 /* Stijlen voor de tabel */
 .tab {
-    width: 70%;
-    border-collapse: collapse;
-    margin: 20px auto;
-
+	width: 70%;
+	border-collapse: collapse;
+	margin: 20px auto;
 }
 
 h2 {
-    padding-bottom: 8px;
-    border-bottom: 1px solid #000000;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #000000;
 }
 
 table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0px auto;
+	width: 100%;
+	border-collapse: collapse;
+	margin: 0px auto;
 }
 
 th, td {
-    text-align: center;
-    padding: 8px;
-    border-bottom: 1px solid #000000; 
+	text-align: center;
+	padding: 8px;
+	border-bottom: 1px solid #000000;
 }
 
 .row:hover {
-    background-color: #e5374e48;
+	background-color: #e5374e48;
 }

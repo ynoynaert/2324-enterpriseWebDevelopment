@@ -9,6 +9,6 @@ import domain.Competition;
 import domain.Sport;
 
 @Repository
-public interface CompetitionRepository extends JpaRepository<Competition, Long>{
+public interface CompetitionRepository extends JpaRepository<Competition, Long> {
 	List<Competition> findBySportOrderByDateAscTimeAsc(Sport s);
 }

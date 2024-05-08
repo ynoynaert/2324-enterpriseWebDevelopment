@@ -2,45 +2,45 @@
 @import url("./navbar.css");
 
 @font-face {
-    font-family: "Font Family Name";
-    src: url("../fonts/Paris2024-Variable.ttf");
-  }
+	font-family: "Font Family Name";
+	src: url("../fonts/Paris2024-Variable.ttf");
+}
 
 * {
-    font-family: "Font Family Name", sans-serif;
-    margin: 0;
-    padding: 0;
+	font-family: "Font Family Name", sans-serif;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 }
 
 /* Stijlen voor de form */
 .tab {
-  width: 70%;
-  border-collapse: collapse;
-  margin: 20px auto;
+	width: 70%;
+	border-collapse: collapse;
+	margin: 20px auto;
 }
 
 h2 {
-  width: 55%;
-  border-collapse: hidden;
-  margin: 0px auto;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #000000;
+	width: 55%;
+	border-collapse: hidden;
+	margin: 0px auto;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #000000;
 }
 
 .page {
-  width: 55%;
-  border-collapse: hidden;
-  margin: 0px auto;
-  margin-top: 10px;
+	width: 55%;
+	border-collapse: hidden;
+	margin: 0px auto;
+	margin-top: 10px;
 }
 
 .fields {
-  float: right;
-  clear: both;
-  width: 150px;
+	float: right;
+	clear: both;
+	width: 150px;
 }
