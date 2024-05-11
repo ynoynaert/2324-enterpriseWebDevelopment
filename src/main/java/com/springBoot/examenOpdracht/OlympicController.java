@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -160,10 +161,16 @@ public class OlympicController {
 		}
 
 		s.addCompetition(competition);
-
-		competition.setSport(s);
-		competition.setTicketLeft(competition.getTotalTickets());
-		competitionRepository.save(competition);
+		
+	    try {
+	        competition.setSport(s);
+	        competition.setTicketLeft(competition.getTotalTickets());
+	        competitionRepository.save(competition);
+	    } catch (DataIntegrityViolationException e) {
+	        // Handle duplicate entry error here
+	        bindingResult.rejectValue("olympicNumber1", "competition.olympic1.database");
+	        return "addCompetition"; // Return to the form with error messages
+	    }
 
 		return "redirect:/sports/{id}";
 	}

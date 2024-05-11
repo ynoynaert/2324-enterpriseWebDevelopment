@@ -31,9 +31,9 @@ public class TicketValidator implements Validator {
 		int intUserHasTickets = userHasTicket.map(Long::intValue).orElse(0);
 
 		if(intUserHasTicketsForCompetition +  ticket.getAmount() > 20)
-			errors.rejectValue("amount", "ticket.amount.max.competition");
+			errors.rejectValue("amount", "ticket.amount.max.competition", new Object[] {"20"}, null);
 		if(intUserHasTickets + ticket.getAmount() > 100) 
-			errors.rejectValue("amount", "ticket.amount.total");
+			errors.rejectValue("amount", "ticket.amount.total", new Object[] {"100"}, null);
 		if(competition.getTicketLeft() < ticket.getAmount())
 			errors.rejectValue("amount", "ticket.amount.ticketLeft");
 	}
