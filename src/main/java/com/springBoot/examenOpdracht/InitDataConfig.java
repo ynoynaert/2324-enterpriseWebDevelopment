@@ -54,6 +54,8 @@ public class InitDataConfig implements CommandLineRunner {
 				.tickets(tickets).build();
 		MyUser admin = MyUser.builder().username("admin").role(Role.ADMIN).password(encoder.encode("Password"))
 				.tickets(tickets).build();
+		MyUser user2 = MyUser.builder().username("persoon").role(Role.USER).password(encoder.encode("Password"))
+				.tickets(tickets).build();
 
 		Sport athletics = new Sport("Athletics");
 		Stadium s1 = new Stadium("Olympic Stadium");
@@ -300,6 +302,7 @@ public class InitDataConfig implements CommandLineRunner {
 
 		usersRepository.save(admin);
 		usersRepository.save(user);
+		usersRepository.save(user2);
 
 		sportRepository.save(athletics);
 		sportRepository.save(gymnastics);

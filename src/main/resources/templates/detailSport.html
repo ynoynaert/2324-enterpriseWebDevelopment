@@ -15,9 +15,11 @@
 		<div class="header-and-tickets">
 			<h2 th:text="${sport.name}"></h2>
 			<h3 th:if=${purchase} th:text="|${purchase} ticket(s) purchased|"></h3>
-			<h3 th:if="${role == 'ADMIN'}" th:href="|/sports/${sport.id}/addCompetition|" class="btn">ADD A COMPETITION</h3>
+			<a th:if="${role == 'ADMIN'}"
+				th:href="|/sports/${sport.id}/addCompetition|" class="btn competition">ADD A
+				COMPETITION</a>
 		</div>
-	
+
 
 		<table>
 			<thead>
@@ -38,22 +40,21 @@
 					<td th:text="${c.stadium.name}"></td>
 					<td th:text="${#strings.listJoin(c.disciplines.![name], ', ')}"></td>
 					<td th:text="${c.ticketLeft}"></td>
-					<td>
-						<span th:if="${role == 'USER' && c.ticketLeft > 0}" th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></span>
-						<span th:if="${role == 'ADMIN'}" th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></span>
-					</td>
+					<td><span th:if="${role == 'USER' && c.ticketLeft > 0}"
+						th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></span> <span
+						th:if="${role == 'ADMIN'}"
+						th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></span></td>
 					<!-- TODO: aanpassen naar tickets bought voor een user -->
-					<td th:if="${role == 'USER'}">
-						<span th:text="${ticketsBought[__${rowNumber.index}__]}"></span>
-					</td>
-					<td th:if="${role == 'USER'}">
-						<a th:if="${c.ticketLeft > 0}" class="btn" th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a>
+					<td th:if="${role == 'USER'}"><span
+						th:text="${ticketsBought[__${rowNumber.index}__]}"></span></td>
+					<td th:if="${role == 'USER'}"><a th:if="${c.ticketLeft > 0}"
+						class="btn" th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a>
 					</td>
 				</tr>
 			</th:block>
 
 		</table>
-		
+
 	</div>
 </body>
 

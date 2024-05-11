@@ -4,8 +4,11 @@ Examenopdracht EWDJ Youna Noynaert
 **Login gegevens**
 
 > Admin
-- username: admin
+- Username: admin
 - Password: Password
-> User
-- username: user
+> User met tickets
+- Username: user
+- Password: Password
+> User zonder tickets
+- username: persoon
 - Password: Password
