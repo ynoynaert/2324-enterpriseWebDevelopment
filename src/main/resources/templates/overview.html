@@ -9,25 +9,23 @@
 </head>
 
 <body>
-	<div th:include="navbar :: copy"></div>
+    <div th:include="navbar :: copy"></div>
 
-	<div class="tab">
-		<table>
-			<h2 th:text="#{header}"></h2>
-			<th:block th:each="sport: ${sportList}">
-				<tr>
-					<td th:text="${sport.name}"></td>
-					<td><a class="btn" th:href="|/sports/${sport.id}|"
-						th:text="|#{details}|"></a></td>
-					<td th:if="${role == 'USER'}"><a class="btn"
-						th:href="|/sports/${sport.id}/tickets|" th:text="|#{tickets}|"></a></td>
-					<!--TODO: href tickets  -->
-				</tr>
-			</th:block>
-		</table>
-	</div>
-
-
+    <div class="tab">
+        <div class="header-and-tickets">
+            <h2 th:text="#{header}"></h2>
+            <a th:if="${role == 'USER' && user.tickets.size > 0}" class="btn tickets-btn" th:href="@{/sports/tickets}" th:text="#{tickets}"></a>
+        </div>
+        <table>
+            <th:block th:each="sport: ${sportList}">
+                <tr>
+                    <td th:text="${sport.name}"></td>
+                    <td><a class="btn" th:href="|/sports/${sport.id}|" th:text="#{details}"></a></td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
 </body>
+
 
 </html>

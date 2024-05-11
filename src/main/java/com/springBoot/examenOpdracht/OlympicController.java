@@ -1,6 +1,7 @@
 package com.springBoot.examenOpdracht;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import domain.Competition;
 import domain.Discipline;
+import domain.MyUser;
 import domain.Sport;
 import domain.Stadium;
 import jakarta.validation.Valid;
@@ -66,6 +68,11 @@ public class OlympicController {
 		return usersRepository.findByUsername(principal.getName()).getRole().toString();
 	}
 
+	@ModelAttribute("user")
+	public MyUser user(Principal principal) {
+		return usersRepository.findByUsername(principal.getName());
+	}
+
 	@GetMapping
 	public String listSport(Model model) {
 		model.addAttribute("sportList", sportRepository.findAll());
@@ -102,7 +109,7 @@ public class OlympicController {
 
 	@PostMapping("/{id}/addCompetition")
 	public String addCompetitionToSport(@RequestParam("id") long id, @Valid Competition competition,
-	        BindingResult bindingResult, @RequestParam Map<String, String> requestParams, Model model) {
+			BindingResult bindingResult, @RequestParam Map<String, String> requestParams, Model model) {
 		Optional<Sport> sport = sportRepository.findById(id);
 		if (!sport.isPresent())
 			return "redirect:/sports/{id}";
@@ -120,27 +127,26 @@ public class OlympicController {
 			// messageSource.getMessage("", null, locale))); //TODO
 			return "addCompetition";
 		}
-		
-		Set<Discipline> selectedDisciplines = new HashSet<>();
-	    for (Map.Entry<String, String> entry : requestParams.entrySet()) {
-	        if (entry.getKey().startsWith("disciplines")) {
-	            long disciplineId = Long.parseLong(entry.getValue());
-	            Optional<Discipline> disciplineOptional = disciplineRepository.findById(disciplineId);
-	            disciplineOptional.ifPresent(selectedDisciplines::add);
-	        }
-	    }
 
-	    if (!selectedDisciplines.isEmpty()) {
-	    	for(Discipline disci : selectedDisciplines)
-	    		competition.addDisciplines(disci);
-	    }
+		Set<Discipline> selectedDisciplines = new HashSet<>();
+		for (Map.Entry<String, String> entry : requestParams.entrySet()) {
+			if (entry.getKey().startsWith("disciplines")) {
+				long disciplineId = Long.parseLong(entry.getValue());
+				Optional<Discipline> disciplineOptional = disciplineRepository.findById(disciplineId);
+				disciplineOptional.ifPresent(selectedDisciplines::add);
+			}
+		}
+
+		if (!selectedDisciplines.isEmpty()) {
+			for (Discipline disci : selectedDisciplines)
+				competition.addDisciplines(disci);
+		}
 
 		s.addCompetition(competition);
-		
+
 		competition.setSport(s);
 		competition.setTicketLeft(competition.getTotalTickets());
 		competitionRepository.save(competition);
-		olympicService.makeTickets(id, competition.getId(), competition.getPrice(), competition.getTotalTickets());
 
 		return "redirect:/sports/{id}";
 	}
@@ -171,14 +177,11 @@ public class OlympicController {
 		return "redirect:/sports/{id}";
 	}
 
-	@GetMapping("/{id}/tickets")
-	public String showTickets(@PathVariable("id") long sportId, Model model) {
-		Optional<Sport> sport = sportRepository.findById(sportId);
-		if (!sport.isPresent())
-			return "redirect:/sports";
-
-		model.addAttribute("sport", sport.get());
-		// TODO: verder uitwerken als account effectief bestaat
+	@GetMapping("/tickets")
+	public String showTickets(Model model, Principal principal) {
+		MyUser user = usersRepository.findByUsername(principal.getName());
+		List<Object[]> tickets = ticketRepository.findByOwnerAndCompetitionGroupByCompetition(user);
+		model.addAttribute("tickets", tickets);
 		return "overviewTickets";
 	}
 

@@ -32,11 +32,15 @@
 					<td th:text="${c.stadium.name}"></td>
 					<td th:text="${#strings.listJoin(c.disciplines.![name], ', ')}"></td>
 					<td th:text="${c.ticketLeft}"></td>
-					<td th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></td>
+					<td>
+						<span th:if="${role == 'USER' && c.ticketLeft > 0}" th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></span>
+						<span th:if="${role == 'ADMIN'}" th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></span>
+					</td>
 					<!-- TODO: aanpassen naar tickets bought voor een user -->
 					<td th:if="${role == 'USER'}">5</td>
-					<td th:if="${role == 'USER'}"><a class="btn"
-						th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a></td>
+					<td th:if="${role == 'USER'}">
+						<a th:if="${c.ticketLeft > 0}" class="btn" th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a>
+					</td>
 				</tr>
 			</th:block>
 

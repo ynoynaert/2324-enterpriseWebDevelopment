@@ -1,6 +1,8 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +11,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,7 +19,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Data
@@ -32,8 +34,8 @@ public class MyUser implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-//	@OneToMany(mappedBy = "owner") @Getter
-//	private List<Ticket> tickets = new ArrayList<>();
+	@OneToMany(mappedBy = "owner") @Getter
+	private List<Ticket> tickets;
 
 	@Column(nullable = false, unique = true)
 	private String username;
@@ -45,8 +47,8 @@ public class MyUser implements Serializable {
 	@Column(length = 20)
 	private Role role;
 
-//	public void addTicket(Ticket ticket) {
-//		tickets.add(ticket);
-//	}
+	public void addTicket(Ticket ticket) {
+		tickets.add(ticket);
+	}
 
 }

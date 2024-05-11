@@ -2,6 +2,8 @@ package com.springBoot.examenOpdracht;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +17,7 @@ import domain.MyUser;
 import domain.Role;
 import domain.Sport;
 import domain.Stadium;
+import domain.Ticket;
 import repository.CompetitionRepository;
 import repository.DisciplineRepository;
 import repository.SportRepository;
@@ -42,9 +45,12 @@ public class InitDataConfig implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
+		List<Ticket> tickets = new ArrayList<>();
 
-		MyUser user = MyUser.builder().username("user").role(Role.USER).password(encoder.encode("Password")).build();
-		MyUser admin = MyUser.builder().username("admin").role(Role.ADMIN).password(encoder.encode("Password")).build();
+		MyUser user = MyUser.builder().username("user").role(Role.USER).password(encoder.encode("Password"))
+				.tickets(tickets).build();
+		MyUser admin = MyUser.builder().username("admin").role(Role.ADMIN).password(encoder.encode("Password"))
+				.tickets(tickets).build();
 
 		Sport athletics = new Sport("Athletics");
 		Stadium s1 = new Stadium("Olympic Stadium");
@@ -90,13 +96,13 @@ public class InitDataConfig implements CommandLineRunner {
 		Discipline dv2 = new Discipline("Beach Volleyball");
 		Discipline dv3 = new Discipline("Mixed Volleyball");
 		Discipline dv4 = new Discipline("Sitting Volleyball");
-		Competition c3 = new Competition(LocalDate.of(2024, 8, 6), LocalTime.of(17, 30), "91357", "92357", 28, 20.0, 8); // dv1
+		Competition c3 = new Competition(LocalDate.of(2024, 8, 6), LocalTime.of(17, 30), "91357", "92357", 28, 20.0, 8);
 		Competition c8 = new Competition(LocalDate.of(2024, 8, 10), LocalTime.of(16, 45), "12468", "13468", 27, 18.0,
-				7); // dv2
+				7);
 		Competition c13 = new Competition(LocalDate.of(2024, 7, 31), LocalTime.of(19, 15), "23579", "14579", 19, 25.0,
-				9); // dv2, dv3
+				9);
 		Competition c18 = new Competition(LocalDate.of(2024, 7, 29), LocalTime.of(15, 45), "34680", "25680", 13, 22.0,
-				3); // dv4
+				3);
 
 		Sport basketball = new Sport("Basketball");
 		Stadium s4 = new Stadium("Basketball Arena");
@@ -108,13 +114,13 @@ public class InitDataConfig implements CommandLineRunner {
 		Discipline db3 = new Discipline("Men's Basketball");
 		Discipline db4 = new Discipline("Slam Dunk Contest");
 		Competition c4 = new Competition(LocalDate.of(2024, 7, 22), LocalTime.of(19, 0), "45791", "36791", 46, 35.0,
-				40); // db1
+				40);
 		Competition c9 = new Competition(LocalDate.of(2024, 8, 2), LocalTime.of(18, 30), "56802", "47802", 45, 28.0,
-				30); // db2, db3
+				30);
 		Competition c14 = new Competition(LocalDate.of(2024, 8, 2), LocalTime.of(20, 30), "67913", "58913", 40, 30.0,
-				20); // db4
+				20);
 		Competition c19 = new Competition(LocalDate.of(2024, 7, 23), LocalTime.of(17, 45), "78024", "69024", 50, 32.0,
-				0); // db2, db1
+				0);
 
 		Sport judo = new Sport("Judo");
 		Stadium s5 = new Stadium("Judo Center");
@@ -124,10 +130,10 @@ public class InitDataConfig implements CommandLineRunner {
 		Discipline dj2 = new Discipline("Individual Kata");
 		Discipline dj3 = new Discipline("Team Judo");
 		Competition c5 = new Competition(LocalDate.of(2024, 8, 5), LocalTime.of(13, 45), "89135", "70135", 40, 40.0,
-				21); // dj1
+				21);
 		Competition c10 = new Competition(LocalDate.of(2024, 8, 5), LocalTime.of(12, 15), "90246", "81246", 35, 45.0,
-				20); // dj3
-		Competition c15 = new Competition(LocalDate.of(2024, 8, 1), LocalTime.of(16, 0), "13570", "92357", 40, 38.0, 4); // dj2
+				20);
+		Competition c15 = new Competition(LocalDate.of(2024, 8, 1), LocalTime.of(16, 0), "13570", "92357", 40, 38.0, 4);
 		Competition c20 = new Competition(LocalDate.of(2024, 7, 29), LocalTime.of(14, 45), "12469", "13468", 35, 42.0,
 				0);
 
@@ -345,26 +351,24 @@ public class InitDataConfig implements CommandLineRunner {
 		competitionRepository.save(c19);
 		competitionRepository.save(c20);
 
-		olympicService.makeTickets(athletics.getId(), c1.getId(), 25.0, 50);
-		olympicService.makeTickets(athletics.getId(), c6.getId(), 22.5, 40);
-		olympicService.makeTickets(athletics.getId(), c11.getId(), 20.0, 46);
-		olympicService.makeTickets(athletics.getId(), c16.getId(), 23.0, 37);
-		olympicService.makeTickets(gymnastics.getId(), c2.getId(), 30.0, 30);
-		olympicService.makeTickets(gymnastics.getId(), c7.getId(), 35.0, 25);
-		olympicService.makeTickets(gymnastics.getId(), c12.getId(), 32.55, 35);
-		olympicService.makeTickets(gymnastics.getId(), c17.getId(), 27.5, 30);
-		olympicService.makeTickets(volleyball.getId(), c3.getId(), 20.0, 28);
-		olympicService.makeTickets(volleyball.getId(), c8.getId(), 18.0, 27);
-		olympicService.makeTickets(volleyball.getId(), c13.getId(), 25.0, 19);
-		olympicService.makeTickets(volleyball.getId(), c18.getId(), 22.0, 13);
-		olympicService.makeTickets(basketball.getId(), c4.getId(), 35.0, 46);
-		olympicService.makeTickets(basketball.getId(), c9.getId(), 28.0, 45);
-		olympicService.makeTickets(basketball.getId(), c14.getId(), 30.0, 40);
-		olympicService.makeTickets(basketball.getId(), c19.getId(), 32.0, 50);
-		olympicService.makeTickets(judo.getId(), c5.getId(), 40.0, 40);
-		olympicService.makeTickets(judo.getId(), c10.getId(), 45.0, 35);
-		olympicService.makeTickets(judo.getId(), c15.getId(), 38.0, 40);
-		olympicService.makeTickets(judo.getId(), c20.getId(), 42.0, 35);
+		olympicService.makeTicket(c1.getId(), user);
+		olympicService.makeTicket(c1.getId(), user);
+		olympicService.makeTicket(c1.getId(), user);
+		olympicService.makeTicket(c1.getId(), user);
+
+		olympicService.makeTicket(c5.getId(), user);
+		olympicService.makeTicket(c5.getId(), user);
+		olympicService.makeTicket(c5.getId(), user);
+		
+		olympicService.makeTicket(c8.getId(), user);
+		olympicService.makeTicket(c8.getId(), user);
+		olympicService.makeTicket(c8.getId(), user);
+		olympicService.makeTicket(c8.getId(), user);
+
+		olympicService.makeTicket(c18.getId(), user);
+		olympicService.makeTicket(c18.getId(), user);
+		olympicService.makeTicket(c18.getId(), user);
+
 	}
 
 }

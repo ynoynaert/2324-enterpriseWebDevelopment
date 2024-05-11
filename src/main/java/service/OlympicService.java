@@ -1,8 +1,9 @@
 package service;
 
+import domain.MyUser;
 import jakarta.transaction.Transactional;
 
 public interface OlympicService {
 	@Transactional
-	public void makeTickets(Long sportId, Long competitionId, double price, int amount);
+	public void makeTicket(Long competitionId, MyUser user);
 }

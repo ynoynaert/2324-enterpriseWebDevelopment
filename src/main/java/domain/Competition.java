@@ -8,18 +8,21 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Range;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +30,7 @@ import lombok.Setter;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(exclude = "id")
 public class Competition implements Serializable {
 
@@ -82,8 +86,11 @@ public class Competition implements Serializable {
 	@Range(min = 1, max = 50, message = "{competition.totalTickets.Range.message}")
 	private int totalTickets;
 
+	@NotNull
 	@Getter
 	@Setter
+	@DecimalMin(value = "0.01", message = "{ticket.price.min.message}")
+	@DecimalMax(value = "149.99", message = "{ticket.price.max.message}")
 	private double price;
 
 	@NotNull
@@ -92,7 +99,8 @@ public class Competition implements Serializable {
 	@Range(min = 0, max = 50, message = "{competition.ticketLeft.Range.message}")
 	private int ticketLeft;
 
-	@OneToMany(mappedBy = "competition")
+	@OneToMany(mappedBy = "competition", fetch = FetchType.EAGER)
+	@Getter
 	private List<Ticket> tickets = new ArrayList<>();
 
 	public Competition(LocalDate date, LocalTime time, String olympicNumber1, String olympicNumber2, int totalTickets, double price, int ticketLeft) {
@@ -103,14 +111,10 @@ public class Competition implements Serializable {
 		setPrice(price);
 		setTotalTickets(totalTickets);
 		setTicketLeft(ticketLeft);
-		addTickets(price, totalTickets);
 	}
 
-	private void addTickets(double price, int totalTickets) {
-		for (int i = 0; i <= totalTickets; i++) {
-			Ticket ticket = new Ticket(price);
-			tickets.add(ticket);
-		}
+	public void addTickets(Ticket ticket) {
+		tickets.add(ticket);
 	}
 	
 	public void addDisciplines(Discipline discipline) {

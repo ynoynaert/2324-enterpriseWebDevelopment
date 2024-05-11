@@ -32,6 +32,10 @@ h2 {
 	border-bottom: 1px solid #000000;
 }
 
+.error{
+	color: #e5374f;
+}
+
 .page {
 	width: 55%;
 	border-collapse: hidden;
