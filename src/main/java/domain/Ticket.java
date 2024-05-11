@@ -19,18 +19,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = "id")
 @NamedQueries({
 		@NamedQuery(name = "Ticket.findByOwnerAndCompetitionGroupByCompetition", 
 				query = "SELECT t.competition.sport, t.competition.date, t.competition.time, "
-				+ "t.competition.stadium, t.competition.price, COUNT(t.competition.id)" + "FROM Ticket t "
+				+ "t.competition.stadium, t.competition.price, SUM(t.amount) " + "FROM Ticket t "
 				+ "WHERE t.owner = :owner "
 				+ "GROUP BY t.competition.id "
 				+ "ORDER BY t.competition.sport, t.competition.date, t.competition.time") })
 public class Ticket implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
+
+	@Id
+	@Getter
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@ManyToOne
 	@Setter
@@ -41,13 +46,12 @@ public class Ticket implements Serializable {
 	@Setter
 	@Getter
 	private MyUser owner;
+	
+	@Setter @Getter
+	private int amount;
 
-	@Id
-	@Getter
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
-	public Ticket(MyUser owner) {
-		setOwner(owner);
+	public Ticket(int amount) {
+		setAmount(amount);
 	}
 }

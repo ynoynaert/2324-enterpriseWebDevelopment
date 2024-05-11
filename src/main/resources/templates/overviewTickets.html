@@ -12,6 +12,7 @@
 	<div th:include="navbar :: copy"></div>
 
 	<div class="tab">
+	<h2>My tickets</h2>
 		<table>
 			<thead>
 				<tr>
@@ -29,7 +30,7 @@
 					<td th:text="${ticket[1]}"></td>
 					<td th:text="${ticket[2]}"></td>
 					<td th:text="${ticket[3].name}"></td>
-					<td th:text="${ticket[4]}"></td>
+					<td th:text="|€ ${#numbers.formatDecimal(ticket[4], 0, 2)}|"></td>
 					<td th:text="${ticket[5]}"></td>
 			</th:block>
 		</table>

@@ -30,7 +30,7 @@
             </select>  <br>
             <span th:if="${#fields.hasErrors('stadium')}" th:errorclass="error" th:errors="*{stadium}"></span><br>
             
-            <label for="disciplines">Discipline(s):</label><br>
+            <label for="disciplines">Discipline(s) (max. 2):</label><br>
             <div class="check" th:each="discipline : ${disciplines}">
                 <input type="checkbox" id="discipline" th:id="'discipline' + ${discipline.id}" th:name="'disciplines[' + ${discipline.id} + ']'" th:value="${discipline.id}">
                 <label th:for="'discipline' + ${discipline.id}" th:text="${discipline.name}"></label><br>

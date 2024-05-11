@@ -21,18 +21,15 @@ public class OlympicServiceImpl implements OlympicService {
 	@Autowired
 	private TicketRepository ticketRepository;
 
-	public void makeTicket(Long competitionId, MyUser user) {
-		Optional<Competition> competition = competitionRepository.findById(competitionId);
+	public void addTicketToComp(Ticket ticket, MyUser user) {
+		Optional<Competition> competition = competitionRepository.findById(ticket.getCompetition().getId());
 		Competition comp = competition.get();
+		System.out.println(ticket.getAmount());
 
-		Ticket ticket = new Ticket(user);
-		ticket.setCompetition(comp);
 		comp.addTickets(ticket);
-		comp.setTicketLeft(comp.getTicketLeft() - 1);
-		competitionRepository.save(comp);
+		comp.setTicketLeft(comp.getTicketLeft() - ticket.getAmount());
 		user.addTicket(ticket);
-		ticketRepository.save(ticket);
-
+		competitionRepository.save(comp);
 	}
 
 }

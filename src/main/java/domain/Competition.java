@@ -113,6 +113,16 @@ public class Competition implements Serializable {
 		setTicketLeft(ticketLeft);
 	}
 
+	public Competition(LocalDate date, LocalTime time, String olympicNumber1, String olympicNumber2, int totalTickets, double price) {
+		setDate(date);		
+		setOlympicNumber1(olympicNumber1);
+		setOlympicNumber2(olympicNumber2);
+		setTime(time);
+		setPrice(price);
+		setTotalTickets(totalTickets);
+		setTicketLeft(totalTickets);
+	}
+	
 	public void addTickets(Ticket ticket) {
 		tickets.add(ticket);
 	}
@@ -120,4 +130,6 @@ public class Competition implements Serializable {
 	public void addDisciplines(Discipline discipline) {
 		disciplines.add(discipline);
 	}
+
+
 }

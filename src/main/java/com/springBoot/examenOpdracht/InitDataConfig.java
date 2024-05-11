@@ -22,6 +22,7 @@ import repository.CompetitionRepository;
 import repository.DisciplineRepository;
 import repository.SportRepository;
 import repository.StadiumRepository;
+import repository.TicketRepository;
 import repository.UserRepository;
 import service.OlympicService;
 
@@ -36,6 +37,8 @@ public class InitDataConfig implements CommandLineRunner {
 	private SportRepository sportRepository;
 	@Autowired
 	private StadiumRepository stadiumRepository;
+	@Autowired
+	private TicketRepository ticketRepository;
 	@Autowired
 	private UserRepository usersRepository;
 	@Autowired
@@ -136,6 +139,11 @@ public class InitDataConfig implements CommandLineRunner {
 		Competition c15 = new Competition(LocalDate.of(2024, 8, 1), LocalTime.of(16, 0), "13570", "92357", 40, 38.0, 4);
 		Competition c20 = new Competition(LocalDate.of(2024, 7, 29), LocalTime.of(14, 45), "12469", "13468", 35, 42.0,
 				0);
+		
+		Ticket t1 = new Ticket(4);
+		Ticket t2 = new Ticket(3);
+		Ticket t3 = new Ticket(4);
+		Ticket t4 = new Ticket(3);
 
 		c1.setStadium(s1);
 		c6.setStadium(s6);
@@ -280,6 +288,15 @@ public class InitDataConfig implements CommandLineRunner {
 		c5.addDisciplines(dj1);
 		c10.addDisciplines(dj3);
 		c15.addDisciplines(dj2);
+		
+		t1.setOwner(user);
+		t2.setOwner(user);
+		t3.setOwner(user);
+		t4.setOwner(user);		
+		t1.setCompetition(c1);
+		t2.setCompetition(c5);
+		t3.setCompetition(c8);
+		t4.setCompetition(c18);
 
 		usersRepository.save(admin);
 		usersRepository.save(user);
@@ -350,25 +367,16 @@ public class InitDataConfig implements CommandLineRunner {
 		competitionRepository.save(c18);
 		competitionRepository.save(c19);
 		competitionRepository.save(c20);
-
-		olympicService.makeTicket(c1.getId(), user);
-		olympicService.makeTicket(c1.getId(), user);
-		olympicService.makeTicket(c1.getId(), user);
-		olympicService.makeTicket(c1.getId(), user);
-
-		olympicService.makeTicket(c5.getId(), user);
-		olympicService.makeTicket(c5.getId(), user);
-		olympicService.makeTicket(c5.getId(), user);
 		
-		olympicService.makeTicket(c8.getId(), user);
-		olympicService.makeTicket(c8.getId(), user);
-		olympicService.makeTicket(c8.getId(), user);
-		olympicService.makeTicket(c8.getId(), user);
-
-		olympicService.makeTicket(c18.getId(), user);
-		olympicService.makeTicket(c18.getId(), user);
-		olympicService.makeTicket(c18.getId(), user);
-
+		ticketRepository.save(t1);
+		ticketRepository.save(t2);
+		ticketRepository.save(t3);
+		ticketRepository.save(t4);
+		
+		olympicService.addTicketToComp(t1, user);
+		olympicService.addTicketToComp(t2, user);		
+		olympicService.addTicketToComp(t3, user);
+		olympicService.addTicketToComp(t4, user);
 	}
 
 }

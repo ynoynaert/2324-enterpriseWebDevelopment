@@ -1,7 +1,6 @@
 package com.springBoot.examenOpdracht;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -26,6 +25,7 @@ import domain.Discipline;
 import domain.MyUser;
 import domain.Sport;
 import domain.Stadium;
+import domain.Ticket;
 import jakarta.validation.Valid;
 import repository.CompetitionRepository;
 import repository.DisciplineRepository;
@@ -73,12 +73,14 @@ public class OlympicController {
 		return usersRepository.findByUsername(principal.getName());
 	}
 
+	// OVERVIEW VAN SPORTEN
 	@GetMapping
 	public String listSport(Model model) {
 		model.addAttribute("sportList", sportRepository.findAll());
 		return "overview";
 	}
 
+	// OVERVIEW VAN COMPETITIES
 	@GetMapping(value = "/{id}")
 	public String showCompetitions(@PathVariable("id") long id, Model model) {
 		Optional<Sport> sport = sportRepository.findById(id);
@@ -92,6 +94,7 @@ public class OlympicController {
 		return "detailSport";
 	}
 
+	// FORM VOOR ADMIN COMP TOEVOEGEN
 	@GetMapping("/{id}/addCompetition")
 	public String showAddCompetitionToSport(@PathVariable("id") long id, Model model) {
 		Optional<Sport> sport = sportRepository.findById(id);
@@ -151,32 +154,40 @@ public class OlympicController {
 		return "redirect:/sports/{id}";
 	}
 
+	// FORM VOOR USERS TICKETS KOPEN
 	@GetMapping("/{id}/buyTickets/{compId}")
 	public String showBuyTickets(@PathVariable("id") long sportId, @PathVariable("compId") long compId, Model model) {
 		Optional<Sport> sport = sportRepository.findById(sportId);
 		Optional<Competition> competition = competitionRepository.findById(compId);
 		if (!sport.isPresent() && !competition.isPresent())
 			return "redirect:/sports/{id}";
+		model.addAttribute("ticket", new Ticket());
 		model.addAttribute("sport", sport.get());
 		model.addAttribute("competition", competition.get());
 		return "buyTickets";
 	}
 
 	@PostMapping("/{id}/buyTickets/{compId}")
-	public String buyTickets(@RequestParam("id") long sportId, Competition comp, BindingResult bindingResult,
-			Model model, Locale locale) {
+	public String buyTickets(@RequestParam("id") long sportId, @RequestParam("compId") long compId,
+			@Valid Ticket ticket, BindingResult bindingResult, Model model, Locale locale, Principal principal) {
+		MyUser user = usersRepository.findByUsername(principal.getName());
+		Optional<Competition> competition = competitionRepository.findById(compId);
 		if (bindingResult.hasErrors()) {
 			// model.addAttribute("message", new Message("error",
 			// messageSource.getMessage("", null, locale))); //TODO
 			return "buyTickets";
 		}
-		Optional<Sport> sport = sportRepository.findById(sportId);
-		Sport s = sport.get();
-		// TODO: logica hier nog uitwerken
+		Competition comp = competition.get();
+		
+		ticket.setOwner(user);
+		ticket.setCompetition(comp);
+		ticketRepository.save(ticket);
+		olympicService.addTicketToComp(ticket, user);
 
 		return "redirect:/sports/{id}";
 	}
 
+	// OVERVIEW VOOR USERS VAN GEKOCHTE TICKETS
 	@GetMapping("/tickets")
 	public String showTickets(Model model, Principal principal) {
 		MyUser user = usersRepository.findByUsername(principal.getName());
@@ -184,7 +195,5 @@ public class OlympicController {
 		model.addAttribute("tickets", tickets);
 		return "overviewTickets";
 	}
-
-	// TODO: @PostMapping
 
 }
