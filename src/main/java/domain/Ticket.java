@@ -20,7 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "id")
 @NamedQueries({
-		@NamedQuery(name = "Ticket.findByOwnerAndCompetitionGroupByCompetition", 
+		@NamedQuery(name = "Ticket.findByOwnerGroupByCompetition", 
 				query = "SELECT t.competition.sport, t.competition.date, t.competition.time, "
 				+ "t.competition.stadium, t.competition.price, SUM(t.amount) " + "FROM Ticket t "
 				+ "WHERE t.owner = :owner "

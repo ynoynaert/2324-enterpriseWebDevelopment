@@ -15,6 +15,7 @@
 		<div class="header-and-tickets">
 			<h2 th:text="${sport.name}"></h2>
 			<h3 th:if=${purchase} th:text="|${purchase} ticket(s) purchased|"></h3>
+			<h3 th:if="${role == 'ADMIN'}" th:href="|/sports/${sport.id}/addCompetition|" class="btn">ADD A COMPETITION</h3>
 		</div>
 	
 
@@ -30,7 +31,7 @@
 				<th th:if="${role == 'USER'}"></th>
 			</thead>
 
-			<th:block th:each="c: ${competitions}">
+			<th:block th:each="c, rowNumber: ${competitions}">
 				<tr class="row">
 					<td th:text="${{c.date}}"></td>
 					<td th:text="${c.time}"></td>
@@ -42,7 +43,9 @@
 						<span th:if="${role == 'ADMIN'}" th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></span>
 					</td>
 					<!-- TODO: aanpassen naar tickets bought voor een user -->
-					<td th:if="${role == 'USER'}">5</td>
+					<td th:if="${role == 'USER'}">
+						<span th:text="${ticketsBought[__${rowNumber.index}__]}"></span>
+					</td>
 					<td th:if="${role == 'USER'}">
 						<a th:if="${c.ticketLeft > 0}" class="btn" th:href="|/sports/${sport.id}/buyTickets/${c.id}|">BUY</a>
 					</td>
@@ -50,9 +53,7 @@
 			</th:block>
 
 		</table>
-		<a th:if="${role == 'ADMIN'}"
-			th:href="|/sports/${sport.id}/addCompetition|" class="btn">Add
-			competition</a>
+		
 	</div>
 </body>
 

@@ -44,6 +44,10 @@ td {
     background-color: #e5374e48;
 }
 
+.tickets{
+	border-bottom: 1px solid #000000;
+}
+
 .header-and-tickets {
     display: flex;
     justify-content: space-between;
@@ -54,4 +58,5 @@ td {
 /* Nieuwe stijl voor tickets-knop */
 .tickets-btn {
     float: right;
+    font-weight: bold;
 }

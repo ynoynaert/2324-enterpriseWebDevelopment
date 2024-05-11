@@ -86,15 +86,25 @@ public class OlympicController {
 
 	// OVERVIEW VAN COMPETITIES
 	@GetMapping(value = "/{id}")
-	public String showCompetitions(@PathVariable("id") long id, Model model) {
+	public String showCompetitions(@PathVariable("id") long id, Model model, Principal principal) {
+		MyUser user = usersRepository.findByUsername(principal.getName());
 		Optional<Sport> sport = sportRepository.findById(id);
 		if (!sport.isPresent())
 			return "redirect:/sports/list";
 
 		Sport s = sport.get();
 		List<Competition> comp = competitionRepository.findBySportOrderByDateAscTimeAsc(sport.get());
+		int[] ticketsBought = new int[comp.size() + 1];
+		for(int i = 0; i < ticketsBought.length - 1; i++) {
+			Competition c = comp.get(i);
+			Optional<Long> tickets = ticketRepository.AmountOfTicketByOwnerAndCompetition(user, c);
+			int amount = tickets.map(Long::intValue).orElse(0);
+			ticketsBought[i] = amount;
+		}
+		
 		model.addAttribute("sport", s);
 		model.addAttribute("competitions", comp);
+		model.addAttribute("ticketsBought", ticketsBought);
 		return "detailSport";
 	}
 
@@ -212,7 +222,7 @@ public class OlympicController {
 	@GetMapping("/tickets")
 	public String showTickets(Model model, Principal principal) {
 		MyUser user = usersRepository.findByUsername(principal.getName());
-		List<Object[]> tickets = ticketRepository.findByOwnerAndCompetitionGroupByCompetition(user);
+		List<Object[]> tickets = ticketRepository.findByOwnerGroupByCompetition(user);
 		model.addAttribute("tickets", tickets);
 		return "overviewTickets";
 	}
