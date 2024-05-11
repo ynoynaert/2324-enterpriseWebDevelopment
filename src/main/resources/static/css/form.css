@@ -19,28 +19,31 @@ body {
 
 /* Stijlen voor de form */
 .tab {
-	width: 70%;
-	border-collapse: collapse;
+	width: 40%;
 	margin: 20px auto;
 }
 
 h2 {
-	width: 55%;
-	border-collapse: hidden;
-	margin: 0px auto;
 	padding-bottom: 8px;
-	border-bottom: 1px solid #000000;
 }
+
 
 .error{
 	color: #e5374f;
 }
 
 .page {
-	width: 55%;
+	width: 95%;
 	border-collapse: hidden;
 	margin: 0px auto;
 	margin-top: 10px;
+}
+
+.header-and-tickets {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #000000;
 }
 
 .fields {

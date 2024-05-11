@@ -24,7 +24,6 @@ public class OlympicServiceImpl implements OlympicService {
 	public void addTicketToComp(Ticket ticket, MyUser user) {
 		Optional<Competition> competition = competitionRepository.findById(ticket.getCompetition().getId());
 		Competition comp = competition.get();
-		System.out.println(ticket.getAmount());
 
 		comp.addTickets(ticket);
 		comp.setTicketLeft(comp.getTicketLeft() - ticket.getAmount());

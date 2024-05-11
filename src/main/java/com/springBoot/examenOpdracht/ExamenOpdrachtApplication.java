@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.format.FormatterRegistry;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -18,6 +17,7 @@ import service.MyUserDetailsService;
 import service.OlympicService;
 import service.OlympicServiceImpl;
 import validator.CompetitionValidator;
+import validator.TicketValidator;
 
 @SpringBootApplication
 @EnableJpaRepositories("repository")
@@ -59,5 +59,10 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
 	@Bean
 	CompetitionValidator competitionValidator() {
 		return new CompetitionValidator();
+	}
+	
+	@Bean
+	TicketValidator ticketValidator() {
+		return new TicketValidator();
 	}
 }

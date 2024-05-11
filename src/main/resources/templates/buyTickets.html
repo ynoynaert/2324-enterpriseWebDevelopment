@@ -12,7 +12,11 @@
 	<div th:include="navbar :: copy"></div>
 
 	<div class="tab">
-		<h2>Buy Tickets</h2>
+		<div class="header-and-tickets">
+            <h2>Buy Tickets</h2>
+            <a th:if="${ticketsBought > 0}" th:text="|You already bought ${ticketsBought} ticket(s)!|"></a>
+        </div>
+		
 		<form method="post" class="page" th:action="|/sports/${sport.id}/buyTickets/${competition.id}|" th:object="${ticket}">
 			<input type="hidden" name="id" th:value="${sport.id}" />
 			<input type="hidden" name="compId" th:value="${competition.id}" />

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import domain.Competition;
 import domain.Discipline;
@@ -35,6 +36,7 @@ import repository.TicketRepository;
 import repository.UserRepository;
 import service.OlympicService;
 import validator.CompetitionValidator;
+import validator.TicketValidator;
 
 @Controller
 @RequestMapping("/sports")
@@ -57,6 +59,8 @@ public class OlympicController {
 	private OlympicService olympicService;
 	@Autowired
 	private CompetitionValidator competitionValidator;
+	@Autowired
+	private TicketValidator ticketValidator;
 
 	@ModelAttribute("username")
 	public String username(Principal principal) {
@@ -156,34 +160,51 @@ public class OlympicController {
 
 	// FORM VOOR USERS TICKETS KOPEN
 	@GetMapping("/{id}/buyTickets/{compId}")
-	public String showBuyTickets(@PathVariable("id") long sportId, @PathVariable("compId") long compId, Model model) {
+	public String showBuyTickets(@PathVariable("id") long sportId, @PathVariable("compId") long compId, Model model, Principal principal) {
+		MyUser user = usersRepository.findByUsername(principal.getName());
 		Optional<Sport> sport = sportRepository.findById(sportId);
 		Optional<Competition> competition = competitionRepository.findById(compId);
+		Optional<Long> ticketsBoughtOp = ticketRepository.AmountOfTicketByOwnerAndCompetition(user, competition.get());
+		int ticketsBought = ticketsBoughtOp.map(Long::intValue).orElse(0);
+		
 		if (!sport.isPresent() && !competition.isPresent())
 			return "redirect:/sports/{id}";
 		model.addAttribute("ticket", new Ticket());
 		model.addAttribute("sport", sport.get());
 		model.addAttribute("competition", competition.get());
+		model.addAttribute("ticketsBought", ticketsBought);
 		return "buyTickets";
 	}
 
 	@PostMapping("/{id}/buyTickets/{compId}")
 	public String buyTickets(@RequestParam("id") long sportId, @RequestParam("compId") long compId,
-			@Valid Ticket ticket, BindingResult bindingResult, Model model, Locale locale, Principal principal) {
+			@Valid Ticket ticket, BindingResult bindingResult, Model model, Locale locale, Principal principal, RedirectAttributes redirectAttributes) {
 		MyUser user = usersRepository.findByUsername(principal.getName());
 		Optional<Competition> competition = competitionRepository.findById(compId);
+		Competition comp = competition.get();
+		Optional<Long> ticketsBoughtOp = ticketRepository.AmountOfTicketByOwnerAndCompetition(user, competition.get());
+		int ticketsBought = ticketsBoughtOp.map(Long::intValue).orElse(0);
+		
+		ticket.setOwner(user);
+		ticket.setCompetition(comp);
+		ticketValidator.validate(ticket, bindingResult);
+
+		model.addAttribute("sport", comp.getSport());
+		model.addAttribute("competition", comp);
+		model.addAttribute("ticketsBought", ticketsBought);
+		
 		if (bindingResult.hasErrors()) {
 			// model.addAttribute("message", new Message("error",
 			// messageSource.getMessage("", null, locale))); //TODO
 			return "buyTickets";
 		}
-		Competition comp = competition.get();
 		
-		ticket.setOwner(user);
-		ticket.setCompetition(comp);
 		ticketRepository.save(ticket);
 		olympicService.addTicketToComp(ticket, user);
 
+		int purchase = ticket.getAmount();
+		redirectAttributes.addFlashAttribute("purchase", purchase);
+		
 		return "redirect:/sports/{id}";
 	}
 
