@@ -1,12 +1,10 @@
 package com.springBoot.examenOpdracht;
 
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -78,6 +76,18 @@ public class OlympicController {
 		return usersRepository.findByUsername(principal.getName());
 	}
 
+	private int[] tickets(List<Competition> comp, MyUser user) {
+		int[] ticketsBought = new int[comp.size() + 1];
+		for (int i = 0; i < ticketsBought.length - 1; i++) {
+			Competition c = comp.get(i);
+			Optional<Long> tickets = ticketRepository.AmountOfTicketByOwnerAndCompetition(user, c);
+			int amount = tickets.map(Long::intValue).orElse(0);
+			ticketsBought[i] = amount;
+		}
+
+		return ticketsBought;
+	}
+
 	// OVERVIEW VAN SPORTEN
 	@GetMapping
 	public String listSport(Model model) {
@@ -95,14 +105,8 @@ public class OlympicController {
 
 		Sport s = sport.get();
 		List<Competition> comp = competitionRepository.findBySportOrderByDateAscTimeAsc(sport.get());
-		int[] ticketsBought = new int[comp.size() + 1];
-		for(int i = 0; i < ticketsBought.length - 1; i++) {
-			Competition c = comp.get(i);
-			Optional<Long> tickets = ticketRepository.AmountOfTicketByOwnerAndCompetition(user, c);
-			int amount = tickets.map(Long::intValue).orElse(0);
-			ticketsBought[i] = amount;
-		}
-		
+		int[] ticketsBought = tickets(comp, user);
+
 		model.addAttribute("sport", s);
 		model.addAttribute("competitions", comp);
 		model.addAttribute("ticketsBought", ticketsBought);
@@ -127,63 +131,60 @@ public class OlympicController {
 
 	@PostMapping("/{id}/addCompetition")
 	public String addCompetitionToSport(@RequestParam("id") long id, @Valid Competition competition,
-			BindingResult bindingResult, @RequestParam Map<String, String> requestParams, Model model) {
+			BindingResult bindingResult, Model model, Principal principal, @RequestParam(value = "disciplines", required = false) List<String> disciplineIds) {
 		Optional<Sport> sport = sportRepository.findById(id);
-		if (!sport.isPresent())
+		if (!sport.isPresent()) {
+			List<Competition> comp = competitionRepository.findBySportOrderByDateAscTimeAsc(sport.get());
+			MyUser user = usersRepository.findByUsername(principal.getName());
+
+			model.addAttribute("sport", sport.get());
+			model.addAttribute("competitions", comp);
+			model.addAttribute("ticketsBought", tickets(comp, user));
 			return "redirect:/sports/{id}";
+		}
+		if (disciplineIds != null && !disciplineIds.isEmpty()) {
+	        // Convert string values to long
+	        List<Long> disciplineIdList = disciplineIds.stream().map(Long::parseLong).collect(Collectors.toList());
+		    Iterable<Discipline> selectedDisciplines = disciplineRepository.findAllById(disciplineIdList);
+		    for(Discipline disc : selectedDisciplines) {
+		    	competition.addDisciplines(disc);
+		    }
+		}
+	    
 		Sport s = sport.get();
-		List<Stadium> stad = stadiumRepository.findBySport(s);
-		List<Discipline> disc = disciplineRepository.findBySport(s);
 		model.addAttribute("sport", s);
-		model.addAttribute("stadiums", stad);
-		model.addAttribute("disciplines", disc);
+		model.addAttribute("stadiums", stadiumRepository.findBySport(s));
+		model.addAttribute("disciplines", disciplineRepository.findBySport(s));
 
 		competitionValidator.validate(competition, bindingResult);
 
 		if (bindingResult.hasErrors()) {
-			// model.addAttribute("message", new Message("error",
-			// messageSource.getMessage("", null, locale))); //TODO
 			return "addCompetition";
 		}
 
-		Set<Discipline> selectedDisciplines = new HashSet<>();
-		for (Map.Entry<String, String> entry : requestParams.entrySet()) {
-			if (entry.getKey().startsWith("disciplines")) {
-				long disciplineId = Long.parseLong(entry.getValue());
-				Optional<Discipline> disciplineOptional = disciplineRepository.findById(disciplineId);
-				disciplineOptional.ifPresent(selectedDisciplines::add);
-			}
+		try {
+			s.addCompetition(competition);
+			competition.setSport(s);
+			competition.setTicketLeft(competition.getTotalTickets());
+			competitionRepository.save(competition);
+		} catch (DataIntegrityViolationException e) {
+			bindingResult.rejectValue("olympicNumber1", "competition.olympic1.database");
+			return "addCompetition";
 		}
-
-		if (!selectedDisciplines.isEmpty()) {
-			for (Discipline disci : selectedDisciplines)
-				competition.addDisciplines(disci);
-		}
-
-		s.addCompetition(competition);
-		
-	    try {
-	        competition.setSport(s);
-	        competition.setTicketLeft(competition.getTotalTickets());
-	        competitionRepository.save(competition);
-	    } catch (DataIntegrityViolationException e) {
-	        // Handle duplicate entry error here
-	        bindingResult.rejectValue("olympicNumber1", "competition.olympic1.database");
-	        return "addCompetition"; // Return to the form with error messages
-	    }
 
 		return "redirect:/sports/{id}";
 	}
 
 	// FORM VOOR USERS TICKETS KOPEN
 	@GetMapping("/{id}/buyTickets/{compId}")
-	public String showBuyTickets(@PathVariable("id") long sportId, @PathVariable("compId") long compId, Model model, Principal principal) {
+	public String showBuyTickets(@PathVariable("id") long sportId, @PathVariable("compId") long compId, Model model,
+			Principal principal) {
 		MyUser user = usersRepository.findByUsername(principal.getName());
 		Optional<Sport> sport = sportRepository.findById(sportId);
 		Optional<Competition> competition = competitionRepository.findById(compId);
 		Optional<Long> ticketsBoughtOp = ticketRepository.AmountOfTicketByOwnerAndCompetition(user, competition.get());
 		int ticketsBought = ticketsBoughtOp.map(Long::intValue).orElse(0);
-		
+
 		if (!sport.isPresent() && !competition.isPresent())
 			return "redirect:/sports/{id}";
 		model.addAttribute("ticket", new Ticket());
@@ -195,13 +196,14 @@ public class OlympicController {
 
 	@PostMapping("/{id}/buyTickets/{compId}")
 	public String buyTickets(@RequestParam("id") long sportId, @RequestParam("compId") long compId,
-			@Valid Ticket ticket, BindingResult bindingResult, Model model, Locale locale, Principal principal, RedirectAttributes redirectAttributes) {
+			@Valid Ticket ticket, BindingResult bindingResult, Model model, Locale locale, Principal principal,
+			RedirectAttributes redirectAttributes) {
 		MyUser user = usersRepository.findByUsername(principal.getName());
 		Optional<Competition> competition = competitionRepository.findById(compId);
 		Competition comp = competition.get();
 		Optional<Long> ticketsBoughtOp = ticketRepository.AmountOfTicketByOwnerAndCompetition(user, competition.get());
 		int ticketsBought = ticketsBoughtOp.map(Long::intValue).orElse(0);
-		
+
 		ticket.setOwner(user);
 		ticket.setCompetition(comp);
 		ticketValidator.validate(ticket, bindingResult);
@@ -209,19 +211,19 @@ public class OlympicController {
 		model.addAttribute("sport", comp.getSport());
 		model.addAttribute("competition", comp);
 		model.addAttribute("ticketsBought", ticketsBought);
-		
+
 		if (bindingResult.hasErrors()) {
 			// model.addAttribute("message", new Message("error",
 			// messageSource.getMessage("", null, locale))); //TODO
 			return "buyTickets";
 		}
-		
+
 		ticketRepository.save(ticket);
 		olympicService.addTicketToComp(ticket, user);
 
 		int purchase = ticket.getAmount();
 		redirectAttributes.addFlashAttribute("purchase", purchase);
-		
+
 		return "redirect:/sports/{id}";
 	}
 

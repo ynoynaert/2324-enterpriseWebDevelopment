@@ -102,6 +102,16 @@ public class Competition implements Serializable {
 	@OneToMany(mappedBy = "competition", fetch = FetchType.EAGER)
 	@Getter
 	private List<Ticket> tickets = new ArrayList<>();
+	
+	public Competition(LocalDate date, LocalTime time, String olympicNumber1, String olympicNumber2, int totalTickets, double price) {
+		setDate(date);		
+		setOlympicNumber1(olympicNumber1);
+		setOlympicNumber2(olympicNumber2);
+		setTime(time);
+		setPrice(price);
+		setTotalTickets(totalTickets);
+		setTicketLeft(totalTickets);
+	}
 
 	public Competition(LocalDate date, LocalTime time, String olympicNumber1, String olympicNumber2, int totalTickets, double price, int ticketLeft) {
 		setDate(date);		
@@ -113,15 +123,6 @@ public class Competition implements Serializable {
 		setTicketLeft(ticketLeft);
 	}
 
-	public Competition(LocalDate date, LocalTime time, String olympicNumber1, String olympicNumber2, int totalTickets, double price) {
-		setDate(date);		
-		setOlympicNumber1(olympicNumber1);
-		setOlympicNumber2(olympicNumber2);
-		setTime(time);
-		setPrice(price);
-		setTotalTickets(totalTickets);
-		setTicketLeft(totalTickets);
-	}
 	
 	public void addTickets(Ticket ticket) {
 		tickets.add(ticket);

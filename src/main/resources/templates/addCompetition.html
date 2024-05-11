@@ -29,12 +29,14 @@
                 <option th:each="stadium : ${stadiums}" th:value="${stadium.id}" th:text="${stadium.name}"></option>
             </select>  <br>
             <span th:if="${#fields.hasErrors('stadium')}" th:errorclass="error" th:errors="*{stadium}"></span><br>
-            
-            <label for="disciplines">Discipline(s) (max. 2):</label><br>
-            <div class="check" th:each="discipline : ${disciplines}">
-                <input type="checkbox" id="discipline" th:id="'discipline' + ${discipline.id}" th:name="'disciplines[' + ${discipline.id} + ']'" th:value="${discipline.id}">
-                <label th:for="'discipline' + ${discipline.id}" th:text="${discipline.name}"></label><br>
-            </div><br>
+
+            <label>Discipline(s) (max. 2):</label>
+            <div class="check" th:each="d: ${disciplines}">
+                 <input type="checkbox"  th:value="${d.id}" th:field="*{disciplines}">
+                 <label th:text="${d.name}"></label>
+         	</div>
+            <span th:if="${#fields.hasErrors('disciplines')}" th:errorclass="error" th:errors="*{disciplines}">
+            </span> <br>
             
             <label for="olympic1">Olympic #1:</label>
             <input type="text" id="olympic1" class="fields" th:field="*{olympicNumber1}" required> <br>
