@@ -13,13 +13,15 @@
 			<img src="/images/paris.png" alt="paris_2024">
 		</div>
 		<div class="right-side">
-			<h2>Log in</h2>
+			<h2>Log in</h2>			
+			<div th:if="${error}" class="error" th:text="${error}"></div>
+			<div th:if="${msg}" class="msg" th:text="${msg}"></div>
+			
 			<form th:action="@{/login}" method="post">
-				<input type="text" name='username' placeholder="Username" required>
-				<input type="password" name='password' placeholder="Password"
-					required>
-				<button type="submit" name="submit" class="login-btn">Log
-					in</button>
+				<input type="text" name='username' placeholder="Username" required>				
+				<input type="password" name='password' placeholder="Password" required>				
+				
+				<button type="submit" name="submit" class="login-btn">Log in</button>
 				<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 			</form>
 		</div>
