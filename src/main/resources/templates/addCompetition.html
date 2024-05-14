@@ -13,6 +13,9 @@
 
     <div class="tab">
         <h2>Add a competition</h2>
+        
+        <p th:if="${message}" th:class="${message.type}" th:text="${message.message}"></p>
+        
         <form method="post" class="page" th:action="|/sports/${sport.id}/addCompetition|" th:object="${competition}">
             <input type="hidden" name="id" th:value="${sport.id}" />
             
@@ -55,6 +58,7 @@
             <span th:if="${#fields.hasErrors('totalTickets')}" th:errorclass="error" th:errors="*{totalTickets}"></span><br>
             
             <button class="btn" type="submit">Add competition</button>
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
         </form>
     </div>
 </body>

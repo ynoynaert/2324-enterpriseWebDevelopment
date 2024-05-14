@@ -48,14 +48,10 @@ public class InitDataConfig implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		List<Ticket> tickets = new ArrayList<>();
 
-		MyUser user = MyUser.builder().username("user").role(Role.USER).password(encoder.encode("Password"))
-				.tickets(tickets).build();
-		MyUser admin = MyUser.builder().username("admin").role(Role.ADMIN).password(encoder.encode("Password"))
-				.tickets(tickets).build();
-		MyUser user2 = MyUser.builder().username("persoon").role(Role.USER).password(encoder.encode("Password"))
-				.tickets(tickets).build();
+		MyUser user = new MyUser("user", encoder.encode("Password"), Role.USER);
+		MyUser admin = new MyUser("admin", encoder.encode("Password"), Role.ADMIN);
+		MyUser user2 = new MyUser("persoon", encoder.encode("Password"), Role.USER);
 
 		Sport athletics = new Sport("Athletics");
 		Stadium s1 = new Stadium("Olympic Stadium");
@@ -141,7 +137,7 @@ public class InitDataConfig implements CommandLineRunner {
 		Competition c15 = new Competition(LocalDate.of(2024, 8, 1), LocalTime.of(16, 0), "13570", "92357", 40, 38.0, 4);
 		Competition c20 = new Competition(LocalDate.of(2024, 7, 29), LocalTime.of(14, 45), "12469", "13468", 35, 42.0,
 				0);
-		
+
 		Ticket t1 = new Ticket(4);
 		Ticket t2 = new Ticket(3);
 		Ticket t3 = new Ticket(4);
@@ -175,6 +171,10 @@ public class InitDataConfig implements CommandLineRunner {
 		c6.addDisciplines(da2);
 		c11.addDisciplines(da3);
 		c16.addDisciplines(da4);
+		s1.addCompetition(c1);
+		s6.addCompetition(c6);
+		s11.addCompetition(c11);
+		s16.addCompetition(c16);
 
 		c2.setStadium(s2);
 		c7.setStadium(s7);
@@ -204,6 +204,10 @@ public class InitDataConfig implements CommandLineRunner {
 		c7.addDisciplines(dg2);
 		c12.addDisciplines(dg3);
 		c17.addDisciplines(dg4);
+		s2.addCompetition(c2);
+		s7.addCompetition(c7);
+		s12.addCompetition(c12);
+		s17.addCompetition(c17);
 
 		c3.setStadium(s3);
 		c8.setStadium(s8);
@@ -234,6 +238,10 @@ public class InitDataConfig implements CommandLineRunner {
 		c13.addDisciplines(dv2);
 		c13.addDisciplines(dv3);
 		c18.addDisciplines(dv4);
+		s3.addCompetition(c3);
+		s8.addCompetition(c8);
+		s13.addCompetition(c13);
+		s18.addCompetition(c18);
 
 		c4.setSport(basketball);
 		c9.setSport(basketball);
@@ -265,6 +273,10 @@ public class InitDataConfig implements CommandLineRunner {
 		c14.addDisciplines(db4);
 		c19.addDisciplines(db2);
 		c19.addDisciplines(db1);
+		s4.addCompetition(c4);
+		s9.addCompetition(c9);
+		s14.addCompetition(c14);
+		s19.addCompetition(c19);
 
 		c5.setStadium(s5);
 		c10.setStadium(s10);
@@ -290,11 +302,15 @@ public class InitDataConfig implements CommandLineRunner {
 		c5.addDisciplines(dj1);
 		c10.addDisciplines(dj3);
 		c15.addDisciplines(dj2);
-		
+		s5.addCompetition(c5);
+		s5.addCompetition(c20);
+		s10.addCompetition(c10);
+		s15.addCompetition(c15);
+
 		t1.setOwner(user);
 		t2.setOwner(user);
 		t3.setOwner(user);
-		t4.setOwner(user);		
+		t4.setOwner(user);
 		t1.setCompetition(c1);
 		t2.setCompetition(c5);
 		t3.setCompetition(c8);
@@ -370,14 +386,14 @@ public class InitDataConfig implements CommandLineRunner {
 		competitionRepository.save(c18);
 		competitionRepository.save(c19);
 		competitionRepository.save(c20);
-		
+
 		ticketRepository.save(t1);
 		ticketRepository.save(t2);
 		ticketRepository.save(t3);
 		ticketRepository.save(t4);
-		
+
 		olympicService.addTicketToComp(t1, user);
-		olympicService.addTicketToComp(t2, user);		
+		olympicService.addTicketToComp(t2, user);
 		olympicService.addTicketToComp(t3, user);
 		olympicService.addTicketToComp(t4, user);
 	}

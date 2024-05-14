@@ -34,7 +34,8 @@ public class MyUser implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@OneToMany(mappedBy = "owner") @Getter
+	@OneToMany(mappedBy = "owner")
+	@Getter
 	private List<Ticket> tickets;
 
 	@Column(nullable = false, unique = true)
@@ -47,8 +48,20 @@ public class MyUser implements Serializable {
 	@Column(length = 20)
 	private Role role;
 
+	public MyUser(String username, String password, Role role) {
+		setUsername(username);
+		setPassword(password);
+		setRole(role);
+		tickets = new ArrayList<>();
+	}
+
 	public void addTicket(Ticket ticket) {
 		tickets.add(ticket);
+	}
+
+	@Override
+	public String toString() {
+		return String.format("MyUser{id=%d, username='%s', role='%s'}", id, username, role);
 	}
 
 }

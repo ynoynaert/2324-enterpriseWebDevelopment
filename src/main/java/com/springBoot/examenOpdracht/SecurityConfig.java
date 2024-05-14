@@ -27,8 +27,11 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.csrfTokenRepository(new HttpSessionCsrfTokenRepository()))
 				.authorizeHttpRequests(requests -> requests.requestMatchers("/login**").permitAll()
-						.requestMatchers("/css/**").permitAll().requestMatchers("/fonts/**").permitAll()
-						.requestMatchers("/images/**").permitAll().requestMatchers("/403**").permitAll()
+						.requestMatchers("/css/**").permitAll()
+						.requestMatchers("/fonts/**").permitAll()
+						.requestMatchers("/images/**").permitAll()
+						.requestMatchers("/403**").permitAll()
+						.requestMatchers("/rest/**").permitAll()
 						.requestMatchers("/*").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/sports/*/addCompetition").hasRole("ADMIN")
 						.requestMatchers("/sports/*/buyTickets/*").hasRole("USER")

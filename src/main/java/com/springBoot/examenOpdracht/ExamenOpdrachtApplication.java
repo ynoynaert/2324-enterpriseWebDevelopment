@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import perform.PerformRest;
 import service.MyUserDetailsService;
 import service.OlympicService;
 import service.OlympicServiceImpl;
@@ -26,6 +27,11 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ExamenOpdrachtApplication.class, args);
+		try {
+			new PerformRest();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -60,7 +66,7 @@ public class ExamenOpdrachtApplication implements WebMvcConfigurer {
 	CompetitionValidator competitionValidator() {
 		return new CompetitionValidator();
 	}
-	
+
 	@Bean
 	TicketValidator ticketValidator() {
 		return new TicketValidator();

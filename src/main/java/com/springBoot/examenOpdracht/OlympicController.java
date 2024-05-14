@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import domain.Competition;
 import domain.Discipline;
 import domain.MyUser;
+import domain.Role;
 import domain.Sport;
 import domain.Stadium;
 import domain.Ticket;
@@ -34,6 +35,7 @@ import repository.StadiumRepository;
 import repository.TicketRepository;
 import repository.UserRepository;
 import service.OlympicService;
+import utility.Message;
 import validator.CompetitionValidator;
 import validator.TicketValidator;
 
@@ -100,16 +102,20 @@ public class OlympicController {
 	public String showCompetitions(@PathVariable("id") long id, Model model, Principal principal) {
 		MyUser user = usersRepository.findByUsername(principal.getName());
 		Optional<Sport> sport = sportRepository.findById(id);
-		if (!sport.isPresent())
-			return "redirect:/sports/list";
+		if (!sport.isPresent()) {
+			model.addAttribute("sportList", sportRepository.findAll());
+			return "redirect:/sports";
+		}
 
 		Sport s = sport.get();
 		List<Competition> comp = competitionRepository.findBySportOrderByDateAscTimeAsc(sport.get());
-		int[] ticketsBought = tickets(comp, user);
+		if (user.getRole() == Role.USER) {
+			int[] ticketsBought = tickets(comp, user);
+			model.addAttribute("ticketsBought", ticketsBought);
+		}
 
 		model.addAttribute("sport", s);
 		model.addAttribute("competitions", comp);
-		model.addAttribute("ticketsBought", ticketsBought);
 		return "detailSport";
 	}
 
@@ -117,10 +123,13 @@ public class OlympicController {
 	@GetMapping("/{id}/addCompetition")
 	public String showAddCompetitionToSport(@PathVariable("id") long id, Model model) {
 		Optional<Sport> sport = sportRepository.findById(id);
-		if (!sport.isPresent())
-			return "redirect:/sports/{id}";
+		if (!sport.isPresent()) {
+			model.addAttribute("sportList", sportRepository.findAll());
+			return "redirect:/sports";
+		}
 
 		List<Stadium> stad = stadiumRepository.findBySport(sport.get());
+
 		List<Discipline> disc = disciplineRepository.findBySport(sport.get());
 		model.addAttribute("competition", new Competition());
 		model.addAttribute("sport", sport.get());
@@ -130,27 +139,24 @@ public class OlympicController {
 	}
 
 	@PostMapping("/{id}/addCompetition")
-	public String addCompetitionToSport(@RequestParam("id") long id, @Valid Competition competition,
-			BindingResult bindingResult, Model model, Principal principal, @RequestParam(value = "disciplines", required = false) List<String> disciplineIds) {
+	public String addCompetitionToSport(@PathVariable("id") long id, @Valid Competition competition,
+			BindingResult bindingResult, Model model, Locale locale, Principal principal,
+			@RequestParam(value = "disciplines", required = false) List<String> disciplineIds) {
+		
 		Optional<Sport> sport = sportRepository.findById(id);
 		if (!sport.isPresent()) {
-			List<Competition> comp = competitionRepository.findBySportOrderByDateAscTimeAsc(sport.get());
-			MyUser user = usersRepository.findByUsername(principal.getName());
+			model.addAttribute("sportList", sportRepository.findAll());
+			return "redirect:/sports";
+		}
 
-			model.addAttribute("sport", sport.get());
-			model.addAttribute("competitions", comp);
-			model.addAttribute("ticketsBought", tickets(comp, user));
-			return "redirect:/sports/{id}";
-		}
 		if (disciplineIds != null && !disciplineIds.isEmpty()) {
-	        // Convert string values to long
-	        List<Long> disciplineIdList = disciplineIds.stream().map(Long::parseLong).collect(Collectors.toList());
-		    Iterable<Discipline> selectedDisciplines = disciplineRepository.findAllById(disciplineIdList);
-		    for(Discipline disc : selectedDisciplines) {
-		    	competition.addDisciplines(disc);
-		    }
+			List<Long> disciplineIdList = disciplineIds.stream().map(Long::parseLong).collect(Collectors.toList());
+			Iterable<Discipline> selectedDisciplines = disciplineRepository.findAllById(disciplineIdList);
+			for (Discipline disc : selectedDisciplines) {
+				competition.addDisciplines(disc);
+			}
 		}
-	    
+
 		Sport s = sport.get();
 		model.addAttribute("sport", s);
 		model.addAttribute("stadiums", stadiumRepository.findBySport(s));
@@ -159,10 +165,14 @@ public class OlympicController {
 		competitionValidator.validate(competition, bindingResult);
 
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("message",
+					new Message("error", messageSource.getMessage("competition_save_fail", null, locale)));
+
 			return "addCompetition";
 		}
 
 		try {
+			competition.getStadium().addCompetition(competition);
 			s.addCompetition(competition);
 			competition.setSport(s);
 			competition.setTicketLeft(competition.getTotalTickets());
@@ -185,8 +195,11 @@ public class OlympicController {
 		Optional<Long> ticketsBoughtOp = ticketRepository.AmountOfTicketByOwnerAndCompetition(user, competition.get());
 		int ticketsBought = ticketsBoughtOp.map(Long::intValue).orElse(0);
 
-		if (!sport.isPresent() && !competition.isPresent())
-			return "redirect:/sports/{id}";
+		if (!sport.isPresent() && !competition.isPresent()) {
+			model.addAttribute("sportList", sportRepository.findAll());
+			return "redirect:/sports";
+		}
+
 		model.addAttribute("ticket", new Ticket());
 		model.addAttribute("sport", sport.get());
 		model.addAttribute("competition", competition.get());
@@ -213,12 +226,12 @@ public class OlympicController {
 		model.addAttribute("ticketsBought", ticketsBought);
 
 		if (bindingResult.hasErrors()) {
-			// model.addAttribute("message", new Message("error",
-			// messageSource.getMessage("", null, locale))); //TODO
+			model.addAttribute("message",
+					new Message("error", messageSource.getMessage("ticket_save_fail", null, locale)));
+
 			return "buyTickets";
 		}
 
-		ticketRepository.save(ticket);
 		olympicService.addTicketToComp(ticket, user);
 
 		int purchase = ticket.getAmount();

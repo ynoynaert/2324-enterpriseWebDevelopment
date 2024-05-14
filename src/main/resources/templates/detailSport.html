@@ -44,7 +44,6 @@
 						th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></span> <span
 						th:if="${role == 'ADMIN'}"
 						th:text="|€ ${#numbers.formatDecimal(c.price, 0, 2)}|"></span></td>
-					<!-- TODO: aanpassen naar tickets bought voor een user -->
 					<td th:if="${role == 'USER'}"><span
 						th:text="${ticketsBought[__${rowNumber.index}__]}"></span></td>
 					<td th:if="${role == 'USER'}"><a th:if="${c.ticketLeft > 0}"

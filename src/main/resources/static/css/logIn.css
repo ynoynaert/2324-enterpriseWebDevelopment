@@ -30,13 +30,16 @@ body {
 .left-side {
 	flex: 1;
 	background-image: url('https://example.com/afbeelding.jpg');
-	/* Vervang 'https://example.com/afbeelding.jpg' door de URL van je afbeelding */
 	background-size: cover;
 }
 
 .right-side {
 	flex: 1;
 	padding: 20px;
+}
+
+.error {	
+	color: #e5374f;
 }
 
 input[type="text"], input[type="password"] {

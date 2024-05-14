@@ -17,6 +17,8 @@
             <a th:if="${ticketsBought > 0}" th:text="|You already bought ${ticketsBought} ticket(s)!|"></a>
         </div>
 		
+		<p th:if="${message}" th:class="${message.type}" th:text="${message.message}"></p>
+		
 		<form method="post" class="page" th:action="|/sports/${sport.id}/buyTickets/${competition.id}|" th:object="${ticket}">
 			<input type="hidden" name="id" th:value="${sport.id}" />
 			<input type="hidden" name="compId" th:value="${competition.id}" />
@@ -27,6 +29,7 @@
              
 
 			<button class="btn" type="submit">Buy tickets</button>
+			<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 		</form>
 	</div>
 </body>

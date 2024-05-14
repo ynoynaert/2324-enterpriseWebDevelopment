@@ -20,22 +20,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(exclude = "id")
 @NamedQueries({
-		@NamedQuery(name = "Ticket.findByOwnerGroupByCompetition", 
-				query = "SELECT t.competition.sport, t.competition.date, t.competition.time, "
+		@NamedQuery(name = "Ticket.findByOwnerGroupByCompetition", query = "SELECT t.competition.sport, t.competition.date, t.competition.time, "
 				+ "t.competition.stadium, t.competition.price, SUM(t.amount) " + "FROM Ticket t "
-				+ "WHERE t.owner = :owner "
-				+ "GROUP BY t.competition.id "
+				+ "WHERE t.owner = :owner " + "GROUP BY t.competition.id "
 				+ "ORDER BY t.competition.sport, t.competition.date, t.competition.time"),
-		@NamedQuery(name = "Ticket.AmountOfTicketByOwnerAndCompetition",
-				query = "SELECT SUM(t.amount) FROM Ticket t "
-				+ "WHERE t.owner = :owner and t.competition = :comp "
-				+ "GROUP BY t.competition.id" ),
-		@NamedQuery(name = "Ticket.AmountOfTicketByOwner",
-				query =  "SELECT SUM(t.amount) FROM Ticket t "
-				+ "WHERE t.owner = :owner GROUP BY t.owner")})
+		@NamedQuery(name = "Ticket.AmountOfTicketByOwnerAndCompetition", query = "SELECT SUM(t.amount) FROM Ticket t "
+				+ "WHERE t.owner = :owner and t.competition = :comp " + "GROUP BY t.competition.id"),
+		@NamedQuery(name = "Ticket.AmountOfTicketByOwner", query = "SELECT SUM(t.amount) FROM Ticket t "
+				+ "WHERE t.owner = :owner GROUP BY t.owner") })
 public class Ticket implements Serializable {
 
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Getter
@@ -51,10 +46,11 @@ public class Ticket implements Serializable {
 	@Setter
 	@Getter
 	private MyUser owner;
-	
+
 	@NotNull
-	@Min(value = 1, message="{ticket.amount.min}")
-	@Setter @Getter
+	@Min(value = 1, message = "{ticket.amount.min}")
+	@Setter
+	@Getter
 	private int amount;
 
 	public Ticket(int amount) {
