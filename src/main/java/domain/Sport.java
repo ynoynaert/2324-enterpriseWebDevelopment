@@ -63,6 +63,11 @@ public class Sport implements Serializable {
 	public Sport(String name) {
 		setName(name);
 	}
+	
+	public Sport(Long id, String name) {
+		setId(id);
+		setName(name);
+	}
 
 	public void addCompetition(Competition comp) {
 		competitions.add(comp);

@@ -19,6 +19,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
@@ -35,9 +37,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "id")
-@JsonPropertyOrder({ "competition_id", "competition_date", "competition_time", "competition_sport",
-		"competition_stadium", "competition_olympicNumber1", "competition_olympicNumber2",
-		"competition_price", "competition_totalTickets", "competition_ticketLeft" })
+@JsonPropertyOrder({ "competition_id", "competition_ticketLeft" })
+@NamedQueries({
+	@NamedQuery(name = "Competition.findBySportId", query = "SELECT c FROM Competition c WHERE sport.id = :sportId")
+})
 public class Competition implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -29,10 +29,11 @@ import domain.Sport;
 import domain.Stadium;
 import exceptions.ValueNotFoundError;
 import repository.CompetitionRepository;
+import repository.SportRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CompetitionRestControllerTest {
+public class OlympicRestControllerTest {
 
 	@Mock
 	private CompetitionRepository mock;
@@ -47,7 +48,7 @@ public class CompetitionRestControllerTest {
 	private final String OLYMPICNUMBER1 = "12002";
 	private final String OLYMPICNUMBER2 = "12000";
 	private final double PRICE = 15;
-	private final Sport SPORT = new Sport("Ctest");
+	private final Sport SPORT = new Sport(ID, "Ctest");
 	private final Stadium STADIUM = new Stadium("Ctest", SPORT);
 	private final int TICKETLEFT = 5;
 	private final LocalTime TIME = LocalTime.of(14, 0);
@@ -93,32 +94,32 @@ public class CompetitionRestControllerTest {
 	}
 
 	@Test
-	public void testGetCompetition_isOk() throws Exception {
+	public void testGetTicketsLeft_isOk() throws Exception {
 		Mockito.when(mock.findById(ID)).thenReturn(aCompetition(ID, DATE, OLYMPICNUMBER1, OLYMPICNUMBER2, PRICE, SPORT,
 				STADIUM, TICKETLEFT, TIME, TOTALTICKETS));
-		performRest("/rest/competitions/" + ID);
-		Mockito.verify(mock, Mockito.times(1)).findById(ID);
+		performRest("/rest/ticketsLeft/" + ID);
+		Mockito.verify(mock).findById(ID);
 	}
 
 	@Test
-	public void testGetCompetition_notFound() throws Exception {
+	public void testGetTicketsLeft_notFound() throws Exception {
 		Mockito.when(mock.findById(ID)).thenThrow(new ValueNotFoundError("Competition", ID));
 		Exception exception = assertThrows(Exception.class, () -> {
-			mockMvc.perform(get("/rest/competitions/" + ID)).andReturn();
+			mockMvc.perform(get("/rest/ticketsLeft/" + ID)).andReturn();
 		});
 
 		assertTrue(exception.getCause() instanceof ValueNotFoundError);
-		Mockito.verify(mock, Mockito.times(1)).findById(ID);
+		Mockito.verify(mock).findById(ID);
 	}
 
 	@Test
 	public void testGetAllCompetitions_emptyList() throws Exception {
 		Mockito.when(mock.findAll()).thenReturn(new ArrayList<>());
 
-		mockMvc.perform(get("/rest/competitions")).andExpect(status().isOk()).andExpect(jsonPath("$").isArray())
+		mockMvc.perform(get("/rest/sports/" + SPORT.getId())).andExpect(status().isOk()).andExpect(jsonPath("$").isArray())
 				.andExpect(jsonPath("$").isEmpty());
 
-		Mockito.verify(mock, Mockito.times(1)).findAll();
+		Mockito.verify(mock).findBySportId(6L);
 	}
 
 	@Test
@@ -126,9 +127,9 @@ public class CompetitionRestControllerTest {
 		Optional<Competition> competition = aCompetition(ID, DATE, OLYMPICNUMBER1, OLYMPICNUMBER2, PRICE, SPORT,
 				STADIUM, TICKETLEFT, TIME, TOTALTICKETS);
 		List<Competition> listCompetitions = List.of(competition.get());
-		Mockito.when(mock.findAll()).thenReturn(listCompetitions);
+		Mockito.when(mock.findBySportId(6L)).thenReturn(listCompetitions);
 
-		mockMvc.perform(get("/rest/competitions"))
+		mockMvc.perform(get("/rest/sports/" + SPORT.getId()))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$").isArray())
 				.andExpect(jsonPath("$").isNotEmpty())
@@ -141,7 +142,7 @@ public class CompetitionRestControllerTest {
 				.andExpect(jsonPath("$[0].totalTickets").value(TOTALTICKETS))
 				.andExpect(jsonPath("$[0].ticketLeft").value(TICKETLEFT));
 
-		Mockito.verify(mock, Mockito.times(1)).findAll();
+		Mockito.verify(mock).findBySportId(6L);
 	}
 
 }

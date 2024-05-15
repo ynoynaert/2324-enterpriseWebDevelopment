@@ -12,7 +12,7 @@
     <div th:include="navbar :: copy"></div>
 
     <div class="tab">
-        <h2>Add a competition</h2>
+        <h2 th:text="|Add a competition for ${sport.name.toLowerCase()}|"></h2>
         
         <p th:if="${message}" th:class="${message.type}" th:text="${message.message}"></p>
         
