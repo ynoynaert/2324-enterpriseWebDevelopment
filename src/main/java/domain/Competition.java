@@ -47,7 +47,6 @@ public class Competition implements Serializable {
 
 	@Id
 	@Getter
-	@Setter
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@JsonPropertyOrder("competition_id")
 	private Long id;

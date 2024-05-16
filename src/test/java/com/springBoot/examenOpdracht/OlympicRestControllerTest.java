@@ -65,7 +65,6 @@ public class OlympicRestControllerTest {
 	private Optional<Competition> aCompetition(Long Id, LocalDate date, String olympcNumber1, String olympcNumber2,
 			double price, Sport sport, Stadium stadium, int ticketLeft, LocalTime time, int totalTickets) {
 		Competition c = new Competition();
-		c.setId(Id);
 		c.setDate(date);
 		c.setOlympicNumber1(olympcNumber1);
 		c.setOlympicNumber2(olympcNumber2);
@@ -82,7 +81,6 @@ public class OlympicRestControllerTest {
 	private void performRest(String uri) throws Exception {		
 		mockMvc.perform(get(uri))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.id").value(ID))
 				.andExpect(jsonPath("$.sport").value(SPORT))
 				.andExpect(jsonPath("$.stadium").value(STADIUM))
 				.andExpect(jsonPath("$.olympicNumber1").value(OLYMPICNUMBER1))
@@ -133,7 +131,6 @@ public class OlympicRestControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$").isArray())
 				.andExpect(jsonPath("$").isNotEmpty())
-				.andExpect(jsonPath("$[0].id").value(ID))
 				.andExpect(jsonPath("$[0].sport").value(SPORT))
 				.andExpect(jsonPath("$[0].stadium").value(STADIUM))
 				.andExpect(jsonPath("$[0].olympicNumber1").value(OLYMPICNUMBER1))
