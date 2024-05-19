@@ -1,8 +1,7 @@
 # Olympische Spelen PARIS 2024
 Examenopdracht EWDJ Youna Noynaert
 
-**Databank gegevens**
-naam: examenOpdrachtOlympischeSpelen
+**naam databank:** examenOpdrachtOlympischeSpelen
 
 **Login gegevens**
 
