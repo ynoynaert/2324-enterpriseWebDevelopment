@@ -3,6 +3,7 @@ package perform;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import domain.Competition;
+import dtos.CompetitionDTO;
 import reactor.core.publisher.Mono;
 
 public class PerformRest {
@@ -32,7 +33,7 @@ public class PerformRest {
 		webClient.get()
 	    .uri(SERVER_URI + "/ticketsLeft/" + id)
 	    .retrieve()
-	    .bodyToMono(Competition.class)
+	    .bodyToMono(CompetitionDTO.class)
 	    .doOnSuccess(c -> printCompDataTicketsLeft(c))
 	    .block();
 	}
@@ -50,11 +51,11 @@ public class PerformRest {
 		}
 	}
 
-	private void printCompDataTicketsLeft(Competition comp) {
+	private void printCompDataTicketsLeft(CompetitionDTO comp) {
 		if (comp != null) {
 			System.out.printf(
-					"ID: %s, ticketsLeft: %d, price: €%.2f %n",
-					comp.getId(), comp.getTicketLeft(), comp.getPrice());
+					"ID: %s, tickets left: %d%n",
+					comp.id(), comp.ticketsLeft());
 		} else {
 			System.out.println("Competition is null");
 		}

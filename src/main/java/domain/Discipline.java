@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Entity;
@@ -33,20 +34,20 @@ public class Discipline {
 	@Getter
 	@Setter
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonPropertyOrder("discipline_id")
+	@JsonProperty("discipline_id")
 	private Long id;
 
 	@NotNull(message = "{validition.empty}")
 	@NotBlank(message = "{validition.empty}")
 	@Getter
 	@Setter
-	@JsonPropertyOrder("discipline_name")
+	@JsonProperty("discipline_name")
 	private String name;
 
 	@ManyToOne
 	@Setter
 	@Getter
-	@JsonPropertyOrder("discipline_sport")
+	@JsonProperty("discipline_sport")
 	private Sport sport;
 
 	@ManyToMany(mappedBy = "disciplines")

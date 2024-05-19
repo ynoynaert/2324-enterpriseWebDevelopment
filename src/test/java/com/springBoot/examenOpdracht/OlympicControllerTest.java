@@ -522,7 +522,7 @@ class OlympicControllerTest {
 		Sport s = sportRepository.findByName("Athletics");
 		assertNotNull(s);
 		
-		Competition c = competitionRepository.findBySportOrderByDateAscTimeAsc(s).getFirst();
+		Competition c = competitionRepository.findBySportId(s.getId()).getFirst();
 		assertNotNull(c);
 		
 		MvcResult result = mockMvc.perform(post("/sports/{id}/buyTickets/{compId}", s.getId(), c.getId())
@@ -542,7 +542,7 @@ class OlympicControllerTest {
 		Sport s = sportRepository.findByName("Athletics");
 		assertNotNull(s);
 		
-		Competition c = competitionRepository.findBySportOrderByDateAscTimeAsc(s).getFirst();
+		Competition c = competitionRepository.findBySportId(s.getId()).getFirst();
 		assertNotNull(c);
 		
 		mockMvc.perform(post("/sports/{id}/buyTickets/{compId}", s.getId(), c.getId())
@@ -558,7 +558,7 @@ class OlympicControllerTest {
 		Sport s = sportRepository.findByName("Athletics");
 		assertNotNull(s);
 		
-		Competition c = competitionRepository.findBySportOrderByDateAscTimeAsc(s).getFirst();
+		Competition c = competitionRepository.findBySportId(s.getId()).getFirst();
 		assertNotNull(c);
 		
 		mockMvc.perform(post("/sports/{id}/buyTickets/{compId}", 10L, c.getId())

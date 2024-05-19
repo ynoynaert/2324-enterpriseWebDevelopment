@@ -8,7 +8,9 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.Range;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Column;
@@ -25,7 +27,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -37,7 +38,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "id")
-@JsonPropertyOrder({ "competition_id", "competition_ticketLeft" })
+@JsonPropertyOrder({ "competition_id", "competition_sport", "competition_stadium", "competition_date", "competition_time", "competition_olympicNumber1", "competition_olympicNumber2", "competition_totalTickets", "competition_ticketLeft", "competition_price" })
 @NamedQueries({
 	@NamedQuery(name = "Competition.findBySportId", query = "SELECT c FROM Competition c WHERE sport.id = :sportId")
 })
@@ -48,31 +49,33 @@ public class Competition implements Serializable {
 	@Id
 	@Getter
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonPropertyOrder("competition_id")
+	@JsonProperty("competition_id")
 	private Long id;
 
 	@ManyToOne
 	@Setter
 	@Getter
-	@JsonPropertyOrder("competition_sport")
+	@JsonProperty("competition_sport")
 	private Sport sport;
 
 	@ManyToOne
 	@Setter
 	@Getter
-	@JsonPropertyOrder("competition_stadium")
+	@JsonProperty("competition_stadium")
 	private Stadium stadium;
 
 	@NotNull
 	@Getter
 	@Setter
-	@JsonPropertyOrder("competition_date")
+	@JsonProperty("competition_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate date;
 
 	@NotNull
 	@Getter
 	@Setter
-	@JsonPropertyOrder("competition_time")
+	@JsonProperty("competition_time")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
 	private LocalTime time;
 
 	@Column(unique = true)
@@ -80,14 +83,14 @@ public class Competition implements Serializable {
 	@NotBlank(message = "{validition.empty}")
 	@Getter
 	@Setter
-	@JsonPropertyOrder("competition_olympicNumber1")
+	@JsonProperty("competition_olympicNumber1")
 	private String olympicNumber1;
 
 	@NotNull(message = "{validition.empty}")
 	@NotBlank(message = "{validition.empty}")
 	@Getter
 	@Setter
-	@JsonPropertyOrder("competition_olympicNumber2")
+	@JsonProperty("competition_olympicNumber2")
 	private String olympicNumber2;
 
 	@ManyToMany
@@ -98,14 +101,14 @@ public class Competition implements Serializable {
 	@NotNull
 	@Getter
 	@Setter
-	@JsonPropertyOrder("competition_totalTickets")
+	@JsonProperty("competition_totalTickets")
 	@Range(min = 1, max = 50, message = "{competition.totalTickets.Range.message}")
 	private int totalTickets;
 
 	@NotNull
 	@Getter
 	@Setter
-	@JsonPropertyOrder("competition_price")
+	@JsonProperty("competition_price")
 	@DecimalMin(value = "0.01", message = "{ticket.price.min.message}")
 	@DecimalMax(value = "149.99", message = "{ticket.price.max.message}")
 	private double price;
@@ -113,7 +116,7 @@ public class Competition implements Serializable {
 	@NotNull
 	@Getter
 	@Setter
-	@JsonPropertyOrder("competition_ticketLeft")
+	@JsonProperty("competition_ticketLeft")
 	@Range(min = 0, max = 50, message = "{competition.ticketLeft.Range.message}")
 	private int ticketLeft;
 

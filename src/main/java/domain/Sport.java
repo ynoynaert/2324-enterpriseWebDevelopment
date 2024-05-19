@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Entity;
@@ -35,14 +36,14 @@ public class Sport implements Serializable {
 	@Getter
 	@Setter
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonPropertyOrder("sport_id")
+	@JsonProperty("sport_id")
 	private Long id;
 
 	@Getter
 	@Setter
 	@NotBlank(message = "{validition.empty}")
 	@NotNull(message = "{validition.empty}")
-	@JsonPropertyOrder("sport_name")
+	@JsonProperty("sport_name")
 	private String name;
 
 	@Getter

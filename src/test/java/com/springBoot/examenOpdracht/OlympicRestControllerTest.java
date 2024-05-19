@@ -78,16 +78,10 @@ public class OlympicRestControllerTest {
 		return Optional.of(c);
 	}
 
-	private void performRest(String uri) throws Exception {		
+	private void performRest(String uri) throws Exception {
 		mockMvc.perform(get(uri))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("$.sport").value(SPORT))
-				.andExpect(jsonPath("$.stadium").value(STADIUM))
-				.andExpect(jsonPath("$.olympicNumber1").value(OLYMPICNUMBER1))
-				.andExpect(jsonPath("$.olympicNumber2").value(OLYMPICNUMBER2))
-				.andExpect(jsonPath("$.price").value(PRICE))
-				.andExpect(jsonPath("$.totalTickets").value(TOTALTICKETS))
-				.andExpect(jsonPath("$.ticketLeft").value(TICKETLEFT));
+				.andExpect(jsonPath("$.ticketsLeft").value(TICKETLEFT));
 		;
 	}
 
@@ -131,13 +125,15 @@ public class OlympicRestControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$").isArray())
 				.andExpect(jsonPath("$").isNotEmpty())
-				.andExpect(jsonPath("$[0].sport").value(SPORT))
-				.andExpect(jsonPath("$[0].stadium").value(STADIUM))
-				.andExpect(jsonPath("$[0].olympicNumber1").value(OLYMPICNUMBER1))
-				.andExpect(jsonPath("$[0].olympicNumber2").value(OLYMPICNUMBER2))
-				.andExpect(jsonPath("$[0].price").value(PRICE))
-				.andExpect(jsonPath("$[0].totalTickets").value(TOTALTICKETS))
-				.andExpect(jsonPath("$[0].ticketLeft").value(TICKETLEFT));
+				.andExpect(jsonPath("$[0].competition_sport.sport_name").value(SPORT.getName()))
+				.andExpect(jsonPath("$[0].competition_stadium.stadium_name").value(STADIUM.getName()))
+				.andExpect(jsonPath("$[0].competition_date").value(DATE.toString()))
+				.andExpect(jsonPath("$[0].competition_time").value(TIME.toString()))
+				.andExpect(jsonPath("$[0].competition_olympicNumber1").value(OLYMPICNUMBER1))
+				.andExpect(jsonPath("$[0].competition_olympicNumber2").value(OLYMPICNUMBER2))
+				.andExpect(jsonPath("$[0].competition_price").value(PRICE))
+				.andExpect(jsonPath("$[0].competition_totalTickets").value(TOTALTICKETS))
+				.andExpect(jsonPath("$[0].competition_ticketLeft").value(TICKETLEFT));
 
 		Mockito.verify(mock).findBySportId(6L);
 	}
